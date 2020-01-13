@@ -1,0 +1,139 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<style>
+    .foot-bar{display: none;}
+</style>
+{/block}
+{block name="body"}
+div id="head-bar">
+<div class="head-bar">
+    <div class="head-bar-back">
+        <a href="javascript:Dback();" data-direction="reverse"><img src="__TMPL__/images/icon-back.png" width="24" height="24"/><span>返回</span></a>
+    </div>
+    <div class="head-bar-title">注册验证</div>
+    <div class="head-bar-right"><a href="{:url('/member')}" data-direction="reverse"><span>取消</span></a></div>
+</div>
+<div class="head-bar-fix"></div>
+</div>
+<div class="main">
+    <form method="post" action="" data-ajax="true" onsubmit="return Scheck();">
+        <style>
+            .xuanz1 { padding:25px 0 12px 0; font-size:16px;}
+            .xuanz label{ display:inline-block; padding-right:10px;}
+        </style>
+        <div class="xuanz" style="padding:0px 16px; ">
+            <div class="xuanz1" style="border-bottom: #E5E5E5 1px solid;">
+                <input type="radio" name="regid" value="3" id="g_6" onclick="Dreg(1);" checked=""><label for="g_6"> 企业会员</label>
+                <input type="radio" name="regid" value="2" id="g_8" onclick="Dreg(1);"><label for="g_8"> 运输公司</label>
+                <input type="radio" name="regid" value="1" id="g_5" onclick="Dreg(0);"><label for="g_5"> 个人会员</label>
+            </div>
+        </div>
+        <div class="list-inp"><div class="bd-b"><input type="tel" name="mobile" id="mobile" placeholder="手机号码" value="13430652525" onblur="window.scrollTo(0,0);"/></div></div>
+        <div class="list-inp"><div class="bd-b"><input name="captcha" id="captcha" type="tel" size="6" placeholder="验证码" value="123456" class="input-captcha"/>&nbsp;<img src="{:url('/member/code')}" title="验证码,看不清楚?请点击刷新&#10;字母不区分大小写" alt="" align="absmiddle" id="captchapng" onclick="reloadcaptcha();" style="cursor:pointer;"/><span id="ccaptcha"></span>
+            <script type="text/javascript">
+                function reloadcaptcha() {
+                    Dd('captchapng').src = '{:url("/member/code")}&refresh='+Math.random();
+                    Dd('ccaptcha').innerHTML = '';
+                    Dd('captcha').value = '';
+                }
+
+                $(function() {
+                    $('#captcha').bind('keyup blur', function() {
+                        checkcaptcha($('#captcha').val());
+                    });
+                });
+            </script></div></div>
+        <div class="list-inp"><div class="bd-b"><input type="tel" name="code" id="code" placeholder="短信验证码" value="123456" onblur="window.scrollTo(0,0);" style="width:120px;"/><a href="javascript:;" class="b" onclick="Ssend();" id="send">发送短信</a></div></div>
+
+        <div class="list-inp gh"><div class="bd-b"><input type="text" name="company" id="company" placeholder="公司全称，注册后不可更改" onblur="Dvalidator('company');"/></div></div>
+        <!--<div class="list-inp"><div class="bd-b"><input type="text" name="post[username]" id="username" placeholder="会员名称，不支持中文" onblur="Dvalidator('username');" autocomplete="off" /></div></div>-->
+        <div class="list-inp"><div class="bd-b"><input type="password" name="password" id="password" placeholder="6-18位数字或字母，密码需包含数字" onblur="Dvalidator('password');" autocomplete="off"/></div></div>
+        <div class="list-inp"><div class="bd-b"><input type="password" name="cpassword" id="cpassword" placeholder="再输入一遍登录密码" onblur="Dvalidator('cpassword');" autocomplete="off"/></div></div>
+        <div class="list-inp"><div class="bd-b"><input type="checkbox" checked="checked" name="read" id="read" value="1" onclick="if(this.checked){Ds('sbm');}else{Dh('sbm');}"/> <a href="register.php?action=read"  data-transition="slideup">我已阅读并同意服务条款</a></div></div>
+        <div class="blank-20"></div>
+        <div class="list-btn"><input type="submit" name="submit" value="立即注册" class="btn-blue"/></div>
+        <div class="blank-20"></div>
+    </form>
+    <script type="text/javascript">
+        function Scheck() {
+            if(Dd('mobile').value.length < 11) {
+                Dtoast('请输入手机号码');
+                return false;
+            }
+            if(Dd('code').value.length < 6) {
+                Dtoast('请输入短信验证码');
+                return false;
+            }
+            if(!Dd('read').checked) {
+                Dtoast('请阅读并同意服务条款');
+                return false;
+            }
+
+            $.post('{:url("/member/register")}',$('form').serialize(),function(data){
+
+                if(data.status=='0'){
+                    Dtoast(data.message);
+
+                }else{
+                    Dtoast(data.message);
+                    setTimeout(function(){
+                        location.href=data.referer;
+                    },1000);
+                }
+
+            },'json');
+            return  false;
+        }
+        function Sstop() {
+            var i = 180;
+            var interval=window.setInterval(
+                function() {
+                    if(i == 0) {
+                        $('#send').html('发送短信');
+                        $('#sendok').html('');
+                        clearInterval(interval);
+                    } else {
+                        $('#send').html('重新发送('+i+'秒)');
+                        i--;
+                    }
+                },
+                1000);
+        }
+        function Ssend() {
+            if($('#send').html().indexOf('秒') != -1) {
+                Dtoast('请耐心等待');
+                return false;
+            }
+            if(Dd('mobile').value.length < 11) {
+                Dtoast('请输入手机号码');
+                return false;
+            }
+
+            $.post('{:url('/member/sms')}', 'mobile='+Dd('mobile').value, function(data) {
+                if(data.status == '1') {
+                    $('#sendok').html('短信发送成功');
+                    Sstop();return;
+                } else {
+                    Dtoast(data.message);
+                }
+
+            },'json');
+        }
+        $(function(){
+            $('#captcha').css({'width':'120px','border':'none','padding':'0','font-size':'16px','margin-top':'10px'});
+        });
+        
+        function Dvalidator() {
+            
+        }
+        
+        function Dreg(type) {
+            if(type==0){
+                $('.gh').hide();
+            }else{
+                $('.gh').show();
+            }
+        }
+    </script>
+</div>
+{/block}

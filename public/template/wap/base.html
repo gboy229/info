@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{:config('cache.site_name')}</title>
+    <meta name="keywords" content="{:config('base.header_keywords')}"/>
+    <meta name="description" content="{:config('base.header_description')}"/>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-title" content="{:config('cache.site_name')}"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#007AFF">
+
+    <link rel="stylesheet" type="text/css" href="__TMPL__/css/jquery.mobile.custom.structure.min.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__/css/xhuicss.css"/>
+    <script type="text/javascript" src="__TMPL__/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="__TMPL__/js/jquery.SuperSlide.2.1.1.js"></script>
+
+    <script type="text/javascript" src="__TMPL__/js/common.js"></script>
+    <script type="text/javascript" src="__TMPL__/js/fix.js"></script>
+    {block name="js"}{/block}
+    {block name="css"}{/block}
+
+
+</head>
+<body>
+
+
+<div data-role="page">
+    <div class="ui-toast"></div>
+    <div class="ui-mask"></div>
+    <div class="ui-sheet"></div>
+    {block name="body"}{/block}
+    <link rel="stylesheet" href="__TMPL__/css/iconfont.css">
+    <div class="foot-bar-fix"></div>
+    <div class="foot-bar">
+        <ul>
+            <li class="{if condition="MODULE_NAME eq 'content' && CONTROLLER_NAME eq 'Index' && ACTION_NAME eq 'index' " }icon-home-on{else/}icon-home{/if}"><a href="/" data-transition="none" data-ajax="false">
+                <i class="iconfont icon-shouye"></i><span>首页</span></a></li>
+            <li class="{if condition="MODULE_NAME eq 'content' && CONTROLLER_NAME eq 'Index' && ACTION_NAME eq 'category' " }icon-channel-on{else/}icon-channel{/if}"><a href="{:url('/category')}" data-transition="none">
+                <i class="iconfont icon-fenlei"></i><span>分类</span></a></li>
+            <li class="fb"><a href="{:url('/member/info/category')}" data-transition="none"><span>发布</span></a></li>
+            <li class="{if condition="MODULE_NAME eq 'content' && CONTROLLER_NAME eq 'Index' && ACTION_NAME eq 'news' " }icon-more-on{else/}icon-more{/if}"><a href="{:url('/news')}" data-transition="none">
+                <i class="iconfont icon-order-acquired"></i><span>头条</span></a></li>
+            <li class="icon-my {if condition="MODULE_NAME eq 'member' " }icon-my-on{else/}icon-my{/if}"><a href="{:url('/member')}" data-transition="none">
+                <i class="iconfont icon-wode"></i><span>我的</span></a></li>
+        </ul>
+    </div>
+    <div class="fix-nav" id="fix-nav" style="display: none;">
+        <div class="fix-nav-wrap">
+            <img class="i-totop" src="__TMPL__/images/scroll-to-top-icon.png">
+        </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(function($){
+            $(window).bind("scroll",function() {
+                initScroll()
+            });
+            var $fixnav = $('#fix-nav');
+            function initScroll()
+            {
+                if ($(window).scrollTop() > $(window).height()/4) {
+                    $fixnav.show();
+                } else {
+                    $fixnav.hide();
+                }
+            }
+            $('.fix-nav-wrap').bind('click', function(e){
+                $(window).scrollTop(0);
+            });
+        });
+
+    </script>
+</div>
+
+</body>
+</html>

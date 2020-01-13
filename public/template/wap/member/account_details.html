@@ -1,0 +1,36 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<style>
+    .list-set-img div{margin-left: 0;padding-left: 20px;}
+</style>
+{/block}
+{block name="body"}
+
+<div id="head-bar">
+<div class="head-bar">
+    <div class="head-bar-back">
+        <a href="{:url('/member')}" data-direction="reverse"><img src="__TMPL__/images/icon-back.png" width="24" height="24"/><span>返回</span></a>
+    </div>
+    <div class="head-bar-title">账户详情</div>
+</div>
+<div class="head-bar-fix"></div>
+</div>
+<div class="blank-35"></div>
+<div class="list-set">
+    <ul>
+        <li><div><span>{$member['realname']} ({$member['sex_text']})</span>姓名</div></li>
+        <li><div><span>{$member['username']}</span>账号</div></li>
+        <li><div><span>{$member['group_name']}</span>类型</div></li>
+        {if condition="$member['group_id']>1"}
+        <li><div><span>{$member['company']}</span>公司</div></li>
+        {/if}
+        <li><div><span>{$member['login_time']}</span>上次登录</div></li>
+        <li><div><span>{$member['register_time']}</span>注册时间</div></li>
+    </ul>
+</div>
+<div class="blank-35"></div>
+<div class="blank-35"></div>
+
+
+
+{/block}

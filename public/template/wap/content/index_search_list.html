@@ -1,0 +1,40 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<style>
+    .option_index .de_main_list .de_mall-cate li{max-width:50%!important;}
+</style>
+{/block}
+{block name="body"}
+<div id="head-bar">
+    <div class="head-bar">
+        <div class="head-bar-back">
+            <a href="{:url('/search')}" data-direction="reverse"><img src="__TMPL__/images/icon-back.png" width="24" height="24"/><span>返回</span></a>
+        </div>
+        <div class="head-bar-title">{$category['name']}搜索</div>
+        </div>
+    </div>
+    <div class="head-bar-fix"></div>
+</div>
+
+{if condition="$list"}
+{volist name="list" id="foo"}
+<div class="list-img">
+    <ul>
+        <li><a href="{:url('/info/details')}/{$foo['id']}"><strong>{$foo['title']}</strong></a></li>
+        <li><em class="f_r">{$foo['add_time']}</em><span>{$foo['user_type']}</span></li>
+    </ul>
+</div>
+{/volist}
+<div class="pages">{$list->render()}</div>
+
+{else/}
+<div class="list-empty">
+    抱歉，没有找到与“<span class="f_red">{:input('kw')}</span>” 相关的内容
+</div>
+
+{/if}
+
+
+
+{/block}
+

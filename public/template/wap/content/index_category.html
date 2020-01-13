@@ -1,0 +1,224 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<style>
+.option_index .de_main_list .de_mall-cate li{max-width:50%!important;}
+</style>
+{/block}
+
+    {block name="body"}
+
+    <div id="head-bar">
+        <div class="head-bar">
+
+            <ul>
+                {volist name="category_list" id="foo"}
+                <li><a href="{:url('/category')}/{$foo['dir_name']}" {if condition="$foo['dir_name'] eq $name"}class="on"{/if}>{$foo['name']}</a></li>
+                {/volist}
+
+                <div class="clear"></div>
+            </ul>
+        </div>
+        <div class="head-bar-fix"></div>
+    </div>
+    <div class="de_wraper">
+        <div class="option_index">
+            <div class="de_hide_list">
+                <div class="de_abbr">
+                    <div class="first_list webkit-box-flex" id="first_list">
+                        <ul>
+                            <li class="directory">全部分类</li>
+                            <li class="directory">石子</li>
+                            <li class="directory">河沙</li>
+                            <li class="directory">机制砂</li>
+                            <li class="directory">毛石</li>
+                        </ul>
+                    </div>
+                    <div class="second_list webkit-box-flex" id="second_list">
+                        <ul>
+                            <li class="two_directory"><a href="?catid=0&areaid=0">全部</a></li>
+                        </ul>
+                        <ul>
+                            <li class="two_directory"><a href="?catid=1&areaid=0">全部</a></li>
+                            <li class="two_directory"><a href="?catid=5&areaid=0">石粉</a></li>
+                            <li class="two_directory"><a href="?catid=6&areaid=0">03</a></li>
+                            <li class="two_directory"><a href="?catid=7&areaid=0">05石</a></li>
+                            <li class="two_directory"><a href="?catid=22&areaid=0">12</a></li>
+                            <li class="two_directory"><a href="?catid=23&areaid=0">13</a></li>
+                            <li class="two_directory"><a href="?catid=24&areaid=0">24</a></li>
+                            <li class="two_directory"><a href="?catid=25&areaid=0">36</a></li>
+                            <li class="two_directory"><a href="?catid=26&areaid=0">其他</a></li>
+                        </ul>
+                        <ul>
+                            <li class="two_directory"><a href="?catid=4&areaid=0">全部</a></li>
+                            <li class="two_directory"><a href="?catid=8&areaid=0">细沙</a></li>
+                            <li class="two_directory"><a href="?catid=9&areaid=0">中粗沙</a></li>
+                            <li class="two_directory"><a href="?catid=10&areaid=0">粗沙</a></li>
+                        </ul>
+                        <ul>
+                            <li class="two_directory"><a href="?catid=11&areaid=0">全部</a></li>
+                            <li class="two_directory"><a href="?catid=27&areaid=0">机制砂</a></li>
+                            <li class="two_directory"><a href="?catid=28&areaid=0">水洗砂</a></li>
+                        </ul>
+                        <ul>
+                            <li class="two_directory"><a href="?catid=12&areaid=0">全部</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="de_abbr">
+                    <div class="first_list webkit-box-flex" id="first_list">
+                        <ul>
+                            <li class="directory">全部地区</li>
+                            <li class="directory">河南</li>
+                            <li class="directory">河北</li>
+                            <li class="directory">山西</li>
+                            <li class="directory">山东</li>
+                            <li class="directory">湖南</li>
+                            <li class="directory">湖北</li>
+                            <li class="directory">其它</li>
+                        </ul>
+                    </div>
+                    <div class="second_list webkit-box-flex" id="second_list">
+                        <ul>
+                            <li class="two_directory"><a href="?catid=0&areaid=0">全部</a></li>
+                        </ul>
+                        <ul>
+                            <li class="two_directory"><a href="?catid=0&areaid=0">全部</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=183">郑州市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=184">开封市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=185">洛阳市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=186">平顶山市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=187">安阳市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=188">鹤壁市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=189">新乡市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=190">焦作市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=191">濮阳市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=192">许昌市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=193">漯河市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=194">三门峡市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=195">南阳市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=196">商丘市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=197">信阳市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=198">周口市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=199">驻马店市</a></li>
+                        </ul>
+                        <ul>
+                            <li class="two_directory"><a href="?catid=0&areaid=0">全部</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=35">石家庄市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=36">唐山市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=37">秦皇岛市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=38">邯郸市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=39">邢台市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=40">保定市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=41">张家口市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=42">承德市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=43">沧州市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=44">廊坊市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=45">衡水市</a></li>
+                        </ul>
+                        <ul>
+                            <li class="two_directory"><a href="?catid=0&areaid=0">全部</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=46">太原市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=47">大同市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=48">阳泉市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=49">长治市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=50">晋城市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=51">朔州市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=52">晋中市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=53">运城市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=54">忻州市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=55">临汾市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=56">吕梁市</a></li>
+                        </ul>
+                        <ul>
+                            <li class="two_directory"><a href="?catid=0&areaid=0">全部</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=166">济南市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=167">青岛市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=168">淄博市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=169">枣庄市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=170">东营市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=171">烟台市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=172">潍坊市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=173">济宁市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=174">泰安市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=175">威海市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=176">日照市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=177">莱芜市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=178">临沂市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=179">德州市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=180">聊城市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=181">滨州市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=182">荷泽市</a></li>
+                        </ul>
+                        <ul>
+                            <li class="two_directory"><a href="?catid=0&areaid=0">全部</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=217">长沙市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=218">株洲市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=219">湘潭市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=220">衡阳市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=221">邵阳市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=222">岳阳市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=223">常德市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=224">张家界市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=225">益阳市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=226">郴州市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=227">永州市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=228">怀化市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=229">娄底市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=230">湘西土家族苗族自治州</a></li>
+                        </ul>
+                        <ul>
+                            <li class="two_directory"><a href="?catid=0&areaid=0">全部</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=200">武汉市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=201">黄石市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=202">十堰市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=203">宜昌市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=204">襄樊市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=205">鄂州市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=206">荆门市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=207">孝感市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=208">荆州市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=209">黄冈市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=210">咸宁市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=211">随州市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=212">恩施土家族苗族自治州</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=213">仙桃市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=214">潜江市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=215">天门市</a></li>
+                            <li class="two_directory"><a href="?catid=0&areaid=216">神农架林区</a></li>
+                        </ul>
+                        <ul>
+                            <li class="two_directory"><a href="?catid=0&areaid=0">全部</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="de_main_list">
+                <ul class="de_mall-cate webkit-box">
+                    <li class="webkit-box-flex dt-text-ellipsis ">全部分类</li>
+                    <li class="webkit-box-flex dt-text-ellipsis ">所在地区</li>
+                </ul>
+            </div>
+            <script type="text/javascript" src="__TMPL__/js/option.js"></script>
+        </div>
+    </div><div class="aui-content">
+    <div class="xh-list-new aui-ellipsis-2">共有相关{$category['name']}<span class="aui-text-danger">{$list->total()}</span>条</div>
+</div>
+
+    {volist name="list" id="foo"}
+    <div class="list-img">
+        <ul>
+            <li><a href="{:url('/info/details')}/{$foo['id']}"><strong>{$foo['title']}</strong></a></li>
+            <li><em class="f_r">{$foo['add_time']}</em><span>{$foo['user_type']}</span></li>
+        </ul>
+    </div>
+    {/volist}
+
+
+    <div class="pages">{$list->render()}</div>
+
+    {/block}
+
+
+

@@ -1,0 +1,78 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<style>
+    .list-set div{background-image: none;}
+    input[type="text"]{width: 100%;}
+    input[type="email"]{width: 100%;}
+    input[type="submit"]{width: 95%;margin: 0 10px;}
+    select{width: 80px;}
+    .list-set span{text-align: right;}
+    .foot-bar{display: none;}
+</style>
+{/block}
+
+{block name="js"}
+<script>
+function ok() {
+    $.post('{:url("/member/account/edit")}',$('form').serialize(),function(data){
+        if(data.status=='0'){
+            Dtoast(data.message);
+        }else{
+            Dtoast(data.message);
+            setTimeout(function(){
+                location.href=data.referer;
+            },1000);
+        }
+
+    },'json');
+    return  false;
+}
+</script>
+{/block}
+{block name="body"}
+
+<div id="head-bar">
+<div class="head-bar">
+    <div class="head-bar-back">
+        <a href="{:url('/member')}" data-direction="reverse"><img src="__TMPL__/images/icon-back.png" width="24" height="24"/><span>返回</span></a>
+    </div>
+    <div class="head-bar-title">修改资料</div>
+</div>
+<div class="head-bar-fix"></div>
+</div>
+<div class="blank-35"></div>
+<div class="list-set">
+    <form method="post">
+    <ul>
+        <li><div><span><input type="text" value="{$member['realname']}" name="realname" maxlength="10"></span>姓名</div></li>
+        <li><div><span><label><input type="radio" value="0" name="sex" {if condition="$member['sex'] eq 0"}checked{/if}>保密</label> <label><input type="radio" value="1" name="sex" {if condition="$member['sex'] eq 1"}checked{/if}>先生</label> <label><input type="radio" value="2" name="sex" {if condition="$member['sex'] eq 2"}checked{/if}>女士</label></span>性别</div></li>
+        <li><div><span><input type="email" value="{$member['email']}" name="email" maxlength="30"></span>邮箱</div></li>
+        <!--
+        <li><div><span>
+
+
+            <select id="province" name="province">
+
+            </select>
+            <select id="city" name="city">
+
+            </select>
+            <select id="county" name="county">
+
+            </select>
+            <script src="__TMPL__/js/address.js" ></script>
+            <script>addressInit('province','city','county','<{$address['province']}>','<{$address['city']}>','<{$address['county']}>');</script>
+
+        </span>地址</div></li>
+        -->
+
+    </ul>
+    </form>
+</div>
+<div class="blank-16"></div>
+<input type="submit" name="submit" value="修改" class="btn-blue" onclick="ok();">
+
+
+
+
+{/block}

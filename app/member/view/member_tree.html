@@ -1,0 +1,179 @@
+{extend name="admin@public/base" /}
+
+{block name="script"}
+<link rel="stylesheet" href="__STATIC__/js/ztree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="__STATIC__/js/ztree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ztree_v3/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ztree_v3/js/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ztree_v3/js/jquery.ztree.exedit.js"></script>
+<SCRIPT type="text/javascript">
+		<!--
+		var setting = {
+			async: {
+				enable: true,
+				url: getUrl
+			},
+			check: {
+				enable: false
+			},
+			data: {
+				simpleData: {
+					enable: true,
+				
+					idKey: "id",
+					pIdKey: "pid",
+					rootPId: 0
+				},
+				key: {
+					name: "name",
+					checked: false
+					
+				}
+			},
+			view: {
+				//addDiyDom: addDiyDom
+			},
+			callback: {
+				beforeExpand: beforeExpand,
+				onAsyncSuccess: onAsyncSuccess,
+				onAsyncError: onAsyncError,
+				onClick: zTreeOnClick
+			}
+		};
+function zTreeOnClick(event, treeId, treeNode) {
+    //alert(treeNode.tId + ", " + treeNode.name);
+};
+		var zNodes =[{$arr}];
+		var curPage = 0;
+		function getUrl(treeId, treeNode) {
+			var param = "id="+ treeNode.id,
+			//var param = "id="+ treeNode.id +"_"+treeNode.page +"&count="+treeNode.pageSize,
+			aObj = $("#" + treeNode.tId + "_a");
+			//aObj.attr("title", "当前第 " + treeNode.page + " 页 / 共 " + treeNode.maxPage + " 页")
+			return "{:url('tree')}?" + param;
+		}
+		function goPage(treeNode, page) {
+			treeNode.page = page;
+			if (treeNode.page<1) treeNode.page = 1;
+			if (treeNode.page>treeNode.maxPage) treeNode.page = treeNode.maxPage;
+			if (curPage == treeNode.page) return;
+			curPage = treeNode.page;
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			zTree.reAsyncChildNodes(treeNode, "refresh");
+		}
+		function beforeExpand(treeId, treeNode) {
+			if (treeNode.page == 0) treeNode.page = 1;
+			return !treeNode.isAjaxing;
+		}
+		function onAsyncSuccess(event, treeId, treeNode, msg) {
+			
+		}
+		function onAsyncError(event, treeId, treeNode, XMLHttpRequest, textStatus, errorThrown) {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			alert("异步获取数据出现异常。");
+			treeNode.icon = "";
+			zTree.updateNode(treeNode);
+		}
+		function addDiyDom(treeId, treeNode) {
+			if (treeNode.level>0) return;
+			var aObj = $("#" + treeNode.tId + "_a");
+			if ($("#addBtn_"+treeNode.id).length>0) return;
+			/*
+			var addStr = "<span class='button lastPage' id='lastBtn_" + treeNode.id
+				+ "' title='last page' onfocus='this.blur();'></span><span class='button nextPage' id='nextBtn_" + treeNode.id
+				+ "' title='next page' onfocus='this.blur();'></span><span class='button prevPage' id='prevBtn_" + treeNode.id
+				+ "' title='prev page' onfocus='this.blur();'></span><span class='button firstPage' id='firstBtn_" + treeNode.id
+				+ "' title='first page' onfocus='this.blur();'></span>";
+			aObj.after(addStr);
+			var first = $("#firstBtn_"+treeNode.id);
+			var prev = $("#prevBtn_"+treeNode.id);
+			var next = $("#nextBtn_"+treeNode.id);
+			var last = $("#lastBtn_"+treeNode.id);
+			treeNode.maxPage = Math.round(treeNode.count/treeNode.pageSize - .5) + (treeNode.count%treeNode.pageSize == 0 ? 0:1);
+			*/
+			first.bind("click", function(){
+				if (!treeNode.isAjaxing) {
+					goPage(treeNode, 1);
+				}
+			});
+			last.bind("click", function(){
+				if (!treeNode.isAjaxing) {
+					goPage(treeNode, treeNode.maxPage);
+				}
+			});
+			prev.bind("click", function(){
+				if (!treeNode.isAjaxing) {
+					goPage(treeNode, treeNode.page-1);
+				}
+			});
+			next.bind("click", function(){
+				if (!treeNode.isAjaxing) {
+					goPage(treeNode, treeNode.page+1);
+				}
+			});
+		};
+		
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			
+			
+		});
+		//-->
+	</SCRIPT>
+{/block}
+{block name="main-content"}
+<div class="main-content">
+
+	<div class="main-content-inner">
+
+		<div class="page-content">
+
+			<div class="row">
+				<div class="col-xs-12">
+                    <div class="border clearfix">
+                        <div class="search clearfix">
+                            <form class="form-inline">
+                                   <?php
+                                        echo  \form\Form::input('text','keywords',input('get.keywords'),'关键词','',array('placeholder'=>'用户ID'));
+                                     
+                                    ?>
+
+                                <div class="form-group">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-purple btn-sm">
+                                        搜索
+                                        <i class="icon-search icon-on-right bigger-110"></i>
+                                    </button>
+                                 </span>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+
+					<div class="table-responsive">
+					
+					
+							<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+					</div>
+
+               
+				</div>
+
+			</div>
+
+
+
+		</div>
+
+
+	</div>
+
+</div>
+
+{/block}
+

@@ -1,0 +1,110 @@
+{extend name="admin@public/base" /}
+{block name="script"}
+<script>
+    $(function(){
+
+        $('[name="type"]').click(function(){
+            if($(this).val()==3){
+                $('.all_tables').removeClass('hide');
+            }else{
+                $('.all_tables').addClass('hide');
+            }
+        })
+
+    })
+</script>
+{/block}
+{block name="main-content"}
+<div class="main-content">
+
+	<div class="main-content-inner">
+
+		<div class="page-content">
+
+			<div class="row">
+				<div class="col-xs-12">
+                    <form class="form-horizontal" role="form" method="post">
+					<input type="hidden" name="id" value="{$info['id']}">
+					<div class="table-responsive">
+					  <table class="table table-striped table-bordered table-hover">
+					   <thead>
+						<tr>
+						 <th class="center" colspan="8">用户</th>
+
+						</tr>
+					   </thead>
+					   <tbody>
+						<tr>
+							<td class="left">用户ID：{$info['id']}</td>   
+							 <td class="left">用户名：{$info['username']}</td>  
+							 <td class="left">用户姓名：{$info['realname']}</td>
+						</tr>
+					   </tbody>
+					  </table>
+  
+					<table class="table table-striped table-bordered table-hover">
+					   <thead>
+						<tr>
+						 <th class="center" colspan="8">矿机</th>
+
+						</tr>
+					   </thead>
+					   <tbody>
+						<tr>
+							{volist name="list.bkj" id="foo"}
+							<td class="left">{$foo['name']}：{:db('kuangji_order')->where(['kj_id'=>$foo['id'],'buy_id'=>$info['id']])->count(1)}</td>   
+							{/volist}
+						</tr>
+					
+					   </tbody>
+					  </table>		
+					  
+					
+					  
+					<table   class="table table-striped table-bordered table-hover">
+						<thead>
+						<tr>
+							<th class="center" colspan="2">矿机信息</th>
+
+						</tr>
+						</thead>
+						<tbody>
+						{volist name="kj_list" id="foo"}
+						<?php 
+					
+							if($foo['class_id']=="比特龙"){
+								$url=url('kuangji/bkj/detail',['id'=>$foo['id']]);
+							}else{
+								$url=url('kuangji/dkj/detail',['id'=>$foo['id']]);
+							}
+						?>
+							<tr>
+							<td class="left">
+								{$foo['name']}：
+								总产天数【{$foo['output_day']}】，日产量【{$foo['day_output']}】，总产量【{$foo['count_output']}】，已产天数【{$foo['ing_day']}】，已产金额【{$foo['ing_money']}】，运行时间【{$foo['start_time']}】，到期时间【{$foo['end_time']}】 <a href="{$url}" target="_blank">点我查看更多信息</a>
+							</td>   
+							</tr>
+						{/volist}
+						</tbody>
+					</table>
+
+
+					</div>
+                    </form>
+
+
+				</div>
+
+			</div>
+
+
+
+		</div>
+
+
+	</div>
+
+</div>
+
+{/block}
+

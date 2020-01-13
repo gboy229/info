@@ -1,0 +1,74 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__TMPL__/css/member.css"/>
+<style>
+
+</style>
+{/block}
+{block name="body"}
+
+<div id="head-bar">
+    <div class="head-bar">
+        <div class="head-bar-back">
+            <a href="?mid=5" data-direction="reverse"><img src="http://www.jiancaigood.com/mobile/static/img/icon-back.png" width="24" height="24"/><span>返回</span></a>
+        </div>
+        <div class="head-bar-title">{$category['name']}修改</div>
+        <div class="head-bar-right">
+            <a href="{:url('lists',['name'=>$category['dir_name']])}"><span>取消</span></a>
+        </div>
+    </div>
+    <div class="head-bar-fix"></div>
+</div>
+
+<div class="ui-form">
+
+    <form method="post" action="?" id="dform" t data-ajax="false" onsubmit="return check();">
+
+        <input type="hidden" name="name" value="{$category['dir_name']}"/>
+        <input type="hidden" name="itemid" value="{$info['id']}"/>
+
+
+        <p>信息标题<em>*</em><b id="dtitle"></b></p>
+        <div><input name="title" type="text" id="title" value="{$info['title']}" maxlength="30"/></div>
+        <p>行业分类<em>*</em><b id="dcatid"></b></p>
+        <div><span id="load_category_1"><select onchange="load_category(this.value, 1);" name="catid"><option value="0">选择分类</option><option value="1">石子</option><option value="4">河沙</option><option value="11">机制砂</option><option value="12">毛石</option></select> </span>
+
+        <section id="load_property" style="display:none;"></section>
+
+        <p>详细说明</p>
+</div>
+
+<div class="ui-editor-content" id="editor">
+    <textarea name="content" style="border: 1px solid #B2B2B2;width: 95%;height: 200px;padding: 5px;">{$info['content']}</textarea>
+</div>
+
+<div class="ui-form">
+    <div class="blank-16"></div>
+    <input type="submit" name="submit" value="修改" class="btn-blue"/>
+    <div class="blank-32"></div>
+</div>
+</form>
+
+<script type="text/javascript">
+    function _p() {
+        if(Dd('tag').value) {
+            Ds('reccate');
+        }
+    }
+    function check() {
+        $.post('{:url("/member/info/edit")}',$('form').serialize(),function(data){
+            if(data.status=='0'){
+                Dtoast(data.message);
+            }else{
+                Dtoast(data.message);
+                setTimeout(function(){
+                    location.href=data.referer;
+                },1000);
+            }
+        },'json');
+        return  false;
+
+    }
+    var destoon_oauth = '0';
+</script>
+{/block}

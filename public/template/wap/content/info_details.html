@@ -1,0 +1,35 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<style>
+    .main .content{ font-size:15px; color:#333; line-height:32px;}
+    .main .content span{ color:#777;}
+    .foot-bar{ display:none}
+</style>
+{/block}
+
+{block name="body"}
+
+<div id="head-bar">
+    <div class="head-bar">
+        <div class="head-bar-back">
+            <a href="javascript:Dback();" data-direction="reverse"><img src="__TMPL__/images/icon-back.png" width="24" height="24"/><span>返回</span></a>
+        </div>
+        <div class="head-bar-title">河沙</div>
+
+    </div>
+    <div class="head-bar-fix"></div>
+</div>
+
+<div class="main">
+    <div class="title"><strong>{$info['title']}</strong></div>
+    <div class="info">{$info['add_time']}&nbsp;&nbsp;浏览:{$info['hits']}</div>
+
+    <div class="content">{$info['content']}</div>
+    {if condition="$info['uid']"}
+    <div class="head bd-b"><strong>联系方式</strong></div>
+    <div class="contact">公司:{if condition="$user_info['group_id'] eq 1"}个人{else/}{$user_info['company']}{/if}<br/>
+        姓名:{$user_info['realname']}({$user_info['sex_text']})<br/>手机:<a href="tel:{$user_info['username']}">{$user_info['username']}</a><br/></div>
+    {/if}
+</div>
+
+{/block}

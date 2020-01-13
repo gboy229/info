@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>注册MI链</title>
+    <style type="text/css">
+        *{padding:0;margin:0;}ul{list-style:none;}html{max-width:720px;min-width:320px;height:100%;margin:0 auto;font-family:'Heiti SC','Microsoft YaHei';outline:0;-webkit-text-size-adjust:none;}body{max-width:720px;min-width:320px;min-height:100%;margin:0 auto;margin:0;position:relative;background:linear-gradient(to bottom,#464959 20%,#2c2d35 100%);}.w{max-width:720px;margin:0 auto;min-width:300px;overflow:hidden;padding:0 15px;}.btn{padding:10px 0;text-align:center;color:#56421e;font-size:16px;background:linear-gradient(to right,#feedb5 20%,#eec780 100%);width:100%;border-radius:5px;margin:15px 0;}input{border:none;border-radius:0;}dl{display:flex;padding:40px 0 20px 0;padding-bottom:10px;overflow:hidden;}dl dd{padding-left:15px;}dl dt img{width:60px;}dl dd p{padding-top:5px;font-size:16px;color:#fff;font-weight:bold;}ul{overflow:hidden;}ul li{margin:10px 0;position:relative;}ul li input{border:0;border-bottom:1px solid #5f6066;padding:12px 5px;width:100%;color:#fff;background:none;}.pwd_reg{display:flex;align-items:center;justify-content:space-between;}.pwd_reg p{padding:10px 5px;}.btn_text{padding:10px 0;}.btn_text{padding-top:10px;}.btn_text p input{border:1px solid #eec780;width:15px;height:15px;appearance:auto;background:#fff;position:relative;top:3px;}#yzmcode img{width:100px;position:absolute;right:0;top:0;}.sms_btn{position:absolute;right:0px;top:-18px;width:100px;font-size:12px;}
+    </style>
+</head>
+
+<body>
+<div class="w">
+    <dl>
+        <dt><img src="/logo.png"></dt>
+        <dd>
+            <p>MI世界</p>
+            <p>见证精彩收益</p>
+        </dd>
+    </dl>
+
+    <form method="post">
+    <ul>
+        <li><input type="tel" maxlength="11" name="mobile" id="mobile" placeholder="请输入手机号码" value=""></li>
+        <li><input type="tel" maxlength="6" name="code" placeholder="请输入手机验证码" value="">
+            <input type="button" class="btn sms_btn" value="获取验证码" id="sendCode">
+        </li>
+        <li><input type="password" maxlength="16" name="login_pwd" placeholder="请输入登录密码" value=""></li>
+        <li><input type="password" maxlength="16" name="new_login_pwd" placeholder="请再次输入登录密码" value=""></li>
+        <li><input type="password" maxlength="16" name="jy_pwd" placeholder="请输入交易密码" value=""></li>
+        <li><input type="password" maxlength="16" name="new_jy_pwd" placeholder="请再次输入交易密码" value=""></li>
+        <li><input type="tel" maxlength="10" name="push" value="{:input('uid')}" placeholder="请输入推荐人ID"></li>
+    </ul>
+    </form>
+
+    <div class="btn_text">
+        <input type="button" value="注册" class="btn" id="send">
+    </div>
+</div>
+
+</body>
+
+<script src="__TMPL__/js/jquery_1.4.2.js"></script>
+<script>
+    $(function(){
+
+
+
+        $('#send').click(function(){
+
+            $.post('/register',$('form').serialize(),function(data){
+                if(data.status=='0'){
+                    alert(data.message);
+                }else{
+                    alert(data.message);
+                    location.href='/';
+                }
+            },'json');
+
+            return false;
+
+        })
+
+        $('#sendCode').click(function(){
+            var phone=$.trim($('#mobile').val());
+            $.post('/register/smscode',{phone:phone},function(data){
+                if(data.status=='0'){
+                    alert(data.message);
+                }else{
+                    sendCode('#sendCode',120);
+                }
+            },'json');
+
+        });
+
+    })
+
+
+    function sendCode(e,second) {
+        let sendButton = document.querySelector(e),
+            buttonHtml = sendButton.innerHTML,
+            number = second;
+        //禁止再次点击
+        sendButton.style.pointerEvents='none';
+        sendButton.style.background='#ccc';
+        let time = setInterval(() => {
+            number--
+            sendButton.value = `已发送(${number})`
+            if (number == 0) {
+                number = 0
+                sendButton.value = '重新发送';
+                sendButton.removeAttribute('style');
+                //允许点击
+                sendButton.style.pointerEvents='auto'
+                clearInterval(time)
+            }
+        }, 1000)
+    }
+
+</script>
+</html>

@@ -1,0 +1,117 @@
+/*通用样式*/
+*,
+::before,
+::after {
+    font-size: 3.611vw;
+    color: #717071;
+    padding: 0;
+    margin: 0;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: 'Microsoft Yahei', sans-serif;
+}
+
+html {
+    max-width: 720px;
+   
+    margin: 0 auto;
+    font-family: 'Heiti SC', 'Microsoft YaHei';
+    /*font-size: 100px;   !*方便用rem*!*/
+    outline: 0;
+    -webkit-text-size-adjust: none; /*字体小于12px时候，依然用12px*/
+}
+
+body {
+    max-width: 720px;
+    
+    margin: 0 auto;
+    margin: 0;
+    position: relative;
+    background-color: #fff;
+}
+
+input {
+    border: none;
+    /*有一些手机需要用下面的来去除扁平化*/
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+
+*,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 3.611vw;
+}
+
+a {
+    /*去掉下划线*/
+    text-decoration: none;
+}
+
+s,
+i,
+em {
+    font-style: normal;
+    text-decoration: none;
+}
+
+img {
+    border: 0;
+    vertical-align: middle;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+.clearfix::before,
+.clearfix::after {
+    content: "";
+    display: block;
+    line-height: 0;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+input:focus {
+    outline: none;
+}
+
+select:focus {
+    outline: none;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+select {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+button {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    -webkit-appearance: none;
+}
+
+.w {
+    max-width: 720px;
+    width: 94.17vw;
+    margin: 0 auto;
+    min-width: 300px;
+}

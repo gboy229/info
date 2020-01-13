@@ -1,0 +1,100 @@
+{extend name="admin@public/base" /}
+{block name="style"}
+body.navbar-fixed{padding-top:0;overflow:hidden;}
+col-sm-10{width:100%;}
+input,textarea{width:100%!important;}
+{/block}
+{block name="script"}
+<script>
+ var countdown=60;
+$(function(){
+
+	$('#breadcrumbs').parent().remove();
+	/*
+	var index = parent.layer.getFrameIndex(window.name);
+	parent.layer.iframeAuto(index);
+	$(window.parent.document.body).find('.layui-layer-iframe').css({'top':'300px'});
+	*/
+		
+	 $('#smscode').click(function(){
+		var obj=this;
+		$.post('{:url("smscode")}',function(data){
+			if(data.status==0){
+				alert(data.message);
+			}else{
+				alert(data.message);
+				settime(obj);
+			}	
+		},'json');
+		    
+	 })
+	
+	 
+    
+
+})
+
+function settime(obj) {
+	if (countdown == 0) {
+		$(obj).attr("disabled",false);
+		$(obj).val("重新发送");
+		countdown = 60;
+		return;
+	} else {
+		$(obj).attr("disabled",true);
+		$(obj).val("(" + countdown + ")秒发送");
+		countdown--;
+	}
+	setTimeout(function() {
+			settime(obj) }
+	 ,1000)
+}
+</script>
+{/block}
+{block name="main-content"}
+<div class="main-content">
+
+    <div class="main-content-inner">
+
+        <div class="page-content">
+
+            <div class="row">
+                <div class="tabbable">
+  
+                    <form class="form-horizontal"  role="form" method="post">
+                        <input type="hidden" name="id" value="<?php echo $info['id']; ?>"/>
+                        <div class="tab-content" style="border:0;">
+
+                            <div id="tag1" class="tab-pane active">
+        <?php
+      
+         echo  \form\Form::input('text','',$info['username'],'会员名','',array('disabled'=>'disabled'));
+         echo  \form\Form::input('text','money','','可用余额('.$info['wallets']['money'].')','',['placeholder'=>'如100则加，-100则减']);
+         //echo  \form\Form::input('text','total_assets','','矿池('.$info['wallets']['total_assets'].')','',['placeholder'=>'如100则加，-100则减']);
+         echo  \form\Form::input('text','shards_money','','碎片('.$info['wallets']['shards_money'].')','',['placeholder'=>'如100则加，-100则减']);
+         echo  \form\Form::input('text','amount','','额度('.$info['wallets']['amount'].')','',['placeholder'=>'如100则加，-100则减']);
+         echo  \form\Form::input('text','code','','验证码','',['placeholder'=>'']);
+         echo '<input type="button" value="发送验证码" id="smscode" class="form-control">';
+         echo  \form\Form::input('textarea','msg','','操作说明','',['placeholder'=>'可填写操作说明']);
+        ?>
+		
+
+
+
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+{/block}

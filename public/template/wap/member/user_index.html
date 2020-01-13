@@ -1,0 +1,40 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<style>
+    .list-set-img div{margin-left: 0;padding-left: 20px;}
+</style>
+{/block}
+{block name="body"}
+
+<div class="ui-toast"></div>
+<div class="ui-mask"></div>
+<div class="ui-sheet"></div>
+<div id="head-bar">
+    <div class="head-bar">
+        <div class="head-bar-title">我的</div>
+    </div>
+    <div class="head-bar-fix"></div>
+</div>
+<div class="blank-10"></div>
+<div class="user-info">
+    <table cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td style="width:100px;height:84px;"><a href="{:url('/member/login')}" data-transition="slideup"><img src="__TMPL__/images/default.jpg"  style="width:64px;height:64px;margin:0 16px;"/></a></td>
+            <td><a href="/member/login" style="width:100%;display:block;" data-transition="slideup"><strong>未登录</strong><br/>
+                按此登录或注册</a></td>
+        </tr>
+    </table>
+</div>
+<div class="blank-10"></div>
+<div class="list-set list-set-img">
+    <ul>
+        <li><div><a href="/member/account" rel="external">账户详情</a></div></li>
+        <li><div><a href="/member/accoun/edit" rel="external">修改资料</a></div></li>
+        <li><div><a href="/member/info">信息管理</a></div>
+        </li>
+    </ul>
+</div>
+
+
+
+{/block}

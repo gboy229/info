@@ -1,0 +1,57 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<style>
+
+    .foot-bar-fix{ display:none}
+</style>
+{/block}
+
+{block name="body"}
+<div id="head-bar">
+    <div class="head-bar">
+        <div class="head-bar-back">
+            <a href="/" data-direction="reverse"><img src="__TMPL__/images/icon-back.png" width="24" height="24"/><span>返回</span></a>
+        </div>
+        <div class="head-bar-title">搜索</div>
+
+    </div>
+    <div class="head-bar-fix"></div>
+</div>
+<div style="background:#FFFFFF;padding:16px;">
+    <form action="{:url('/search/list')}" id="dform" data-ajax="false">
+        <select name="name" style="width:100%;height:34px;border:#D8D8D8 1px solid;font-size:16px;background:#FFFFFF;">
+            <option value="supply">货源供应</option>
+            <option value="demand">需求信息</option>
+            <option value="transport">运输信息</option>
+        </select>
+        <div style="border:#D8D8D8 1px solid;margin:16px 0;padding:4px 6px;border-radius:4px;"><input name="kw" id="kw" value="" type="search" style="width:100%;height:28px;line-height:28px;border:none;font-size:14px;padding:0;" placeholder="请输入关键词" onblur="window.scrollTo(0,0);" autofocus="autofocus"/></div>
+        <div style="padding:0;" onclick="Dsearch();">
+            <div class="btn-blue">搜 索</div>
+        </div>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    function Dsearch() {
+        if(Dd('kw').value.length < 2) {
+            Dtoast('请输入关键词');
+            return false;
+        }
+        Dd('dform').submit();
+    }
+    function Dclear() {
+        $.post('?', {'action':'clear'}, function(data) {
+            if(data == 'ok') {
+                Dtoast('清理成功');
+                setTimeout(function() {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                Dtoast('操作失败');
+            }
+        });
+    }
+</script>
+
+{/block}

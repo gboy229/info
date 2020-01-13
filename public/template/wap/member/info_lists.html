@@ -1,0 +1,85 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__TMPL__/css/member.css"/>
+<style>
+    .ui-form{padding-top: 20px;}
+    #foot-bar .foot-bar{display: block;}
+    .foot-bar{display: none;}
+</style>
+{/block}
+{block name="body"}
+<div id="head-bar">
+    <div class="head-bar">
+        <div class="head-bar-back">
+            <a href="{:url('/member/info/category')}" data-direction="reverse"><img src="__TMPL__/images/icon-back.png" width="24" height="24"/><span>返回</span></a>
+        </div>
+        <div class="head-bar-title">{$category['name']}管理</div>
+        <div class="head-bar-right">
+            <a href="{:url('/member/info/add',['name'=>$category['dir_name']])}"><span>发布</span></a>
+        </div>
+    </div>
+    <div class="head-bar-fix"></div>
+</div>
+<div class="ui-form sch">
+    <form action="?">
+        <input type="hidden" name="name" value="{$category['dir_name']}"/>
+        <input type="hidden" name="status" value="{$status}"/>
+        <div><input type="search" name="kw" value="" placeholder="输入关键词搜索"/></div>
+    </form>
+</div>
+<div class="list-menu">
+    <ul>
+        <a href="?name={$category['dir_name']}&status=3"><li {if condition="$status eq 3"}class="on"{/if} id="s3">已发布 {$statistics[3]}</li></a>
+        <a href="?name={$category['dir_name']}&status=1"><li {if condition="$status eq 1"}class="on"{/if}  id="s2">审核中 {$statistics[1]}</li></a>
+        <a href="?name={$category['dir_name']}&status=2"><li {if condition="$status eq 2"}class="on"{/if}  id="s1">未通过 {$statistics[2]}</li></a>
+        <a href="?name={$category['dir_name']}&status=4"><li {if condition="$status eq 4"}class="on"{/if}  id="s4">已过期 {$statistics[4]}</li></a>
+    </ul>
+</div>
+<form method="post">
+    {volist name="list" id="foo"}
+    <div class="list-img">
+        <input type="checkbox" name="itemid[]" value="{$foo['id']}" class="dsn" id="checkbox-{$foo['id']}"/>
+        <a href="{:url('/info/details',['itemid'=>$foo['id']])}"><img src="__TMPL__/images/80x60.png" width="80" height="60" alt="" onerror="this.src='__TMPL__/images/80x60.png';"/></a>
+        <ul>
+            <li><em class="check" id="check-{$foo['id']}"></em><a href="{:url('edit',['itemid'=>$foo['id']])}" rel="external"><strong>{$foo['title']}</strong></a></li>
+            <li><em class="sheet" id="sheet-{$foo['id']}"></em><span>{$foo['add_time']}</span></li>
+        </ul>
+    </div>
+    {/volist}
+
+    <div class="pages">{$list->render()}</div>
+
+    <div id="foot-bar" class="dsn">
+        <div class="foot-bar-fix"></div>
+        <div class="foot-bar btns">
+            <input type="submit" value="置顶选中" class="btn-green" onclick="this.form.action='{:url("top")}';"/><input type="submit" name="submit" value="删除选中" class="btn-red" onclick="if(confirm('确定要删除选中吗？')){this.form.action='{:url('delete')}'}else{return false;}"/></div>
+    </div>
+</form>
+<script type="text/javascript">
+    $(function(){
+        if($('#foot-bar input').length == 0) $('.check').hide();
+        $('.list-img em').click(function() {
+            if($(this).attr('class') == 'sheet') {
+                var id = $(this).attr('id').replace('sheet-', '');
+                Dsheet('<a href="{:url('edit')}?name={$category['dir_name']}&itemid='+id+'"><span>修改</span></a>|<a href="{:url('copy')}?name={$category[\'dir_name\']}&itemid='+id+'"><span>复制</span></a>|<a href="{:url('delete')}?itemid='+id+'" onclick="return _delete();"><span style="color:red;">删除</span></a>', '取消');
+            } else {
+                var id = $(this).attr('id').replace('check-', '');
+                if($('#checkbox-'+id).attr('checked')) {
+                    $('#checkbox-'+id).attr('checked', false);
+                    $(this).attr('class', 'check');
+                } else {
+                    $('#checkbox-'+id).attr('checked', true);
+                    $(this).attr('class', 'checked');
+                }
+                if($('.checked').length > 0) {
+                    $('#foot-bar').fadeIn(300);
+                } else {
+                    $('#foot-bar').fadeOut(300);
+                }
+            }
+        });
+    });
+</script>
+
+
+{/block}

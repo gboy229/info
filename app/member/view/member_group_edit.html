@@ -1,0 +1,69 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+<div class="main-content">
+
+    <div class="main-content-inner">
+
+        <div class="page-content">
+
+            <div class="row">
+                <div class="tabbable">
+                    <ul class="nav nav-tabs" >
+
+                        <li class="active"><a data-toggle="tab" href="#tag1">基本信息</a></li>
+
+                    </ul>
+
+                    <form class="form-horizontal"  role="form" method="post">
+                        <input type="hidden" name="id" value="{$info['id']}">
+
+                        <div class="tab-content">
+
+                            <div id="tag1" class="tab-pane active">
+        <?php
+     
+         echo  \form\Form::input('text','name',$info['name'],'等级名称','设置会员等级名称');
+         //echo  \form\Form::input('text','min_points',$info['min_points'],'最小经验值','设置会员等级所需要的最低经验值下限');
+         //echo  \form\Form::input('text','max_points',$info['max_points'],'最大经验值','设置会员等级所需要的最高经验值上限');
+         echo  \form\Form::input('text','day_count',$info['day_count'],'每天免费发布条数','');
+         echo  \form\Form::input('text','cost',$info['cost'],'每条费用','');
+
+
+         echo  \form\Form::input('textarea','status',$info['description'],'等级描述','会员等级描述信息');
+
+        ?>
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="clearfix form-actions">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-info"  type="button">
+                                    <i class="icon-ok bigger-110"></i>
+                                    保存
+                                </button>
+
+
+                                <button class="btn" type="reset">
+                                    <i class="icon-undo bigger-110"></i>
+                                    重置
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+{/block}

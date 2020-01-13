@@ -1,0 +1,162 @@
+﻿{extend name="template/wap/base.html" /}
+{block name="js"}
+
+<script type="text/javascript">
+    $(document).bind("mobileinit", function() {
+        $.mobile.ajaxEnabled = false;
+    });
+    Dbrowser='';
+</script>
+{/block}
+{block name="css"}
+<style type="text/css">
+    .home-search {text-align:center;padding:5px;height: 35px;overflow: hidden;background-color: #2888EA;position: relative;margin-top: 30px;}
+    .home-search .m_logo{width:30%;height: 35px;}
+    .home-search .m_logo img{width:100px;height: 35px;}
+    .home-search div.so {width: 89%;height: 30px;line-height: 30px;margin-left: 15px;background:#FFFFFF;border-radius:4px;text-align: left;padding-left: 10px;margin-top: 3px;}
+    .home-search div.so img {width: 20px;height: 20px;vertical-align:top;padding-top: 5px;padding-right:8px;}
+    .home-search div.so span {color:#8E8E93;font-size: 14px;font-weight:normal;}
+    .clear{ clear:both;}
+    .slide {width:100%;background:#FAFAFA;display:inline-block;position:relative;}
+    .quick {background:#FFFFFF;text-align:center; padding: 10px 0 0 0;}
+    .quick li {width:25%;float:left; margin-bottom:10px;}
+    .quick img {width:46px;margin:0 0 0px 0;}
+    .quick span {display:block;font-size:12px; color: #666;line-height:25px;}
+    .quick em {font-style:normal;font-size:12px;color:#FFFFFF;z-index:8;position:relative;display:block;width:22px;height:22px;line-height:22px;left:50%;margin:-74px 0 0 8px;background:#FF0000;border-radius:50%;text-align:center;}
+    .list-menu-fix {/*position:fixed;*/z-index:9;left:0;top:38px;right:0;/*border-top:#A7A7AA 0.5px solid;*/}
+    #main {background:#FFFFFF;}
+    .spin-more,.spin-load {height:44px;background:#FFFFFF url('http://www.jiancaigood.com/mobile/static/img/spinner.gif') no-repeat center center;background-size:16px 16px;display:none;}
+    .home-goto {background:#FFFFFF;padding:8px 8px 16px 8px;text-align:center;display:none;}
+    .home-goto div {background:#007AFF;padding:8px;border-radius:4px;font-size:16px;color:#FFFFFF;}
+    .list-txt {border-top:none;}
+    .clear{ clear:both}
+    .slideTxtBox{ width:100%; text-align:left; padding-top:8px;  }
+    .slideTxtBox .hd{line-height:42px; height:43px; background:#FFF;  border-bottom:1px solid #ddd;  position:relative; }
+    .slideTxtBox .hd ul{ display:block;}
+    .slideTxtBox .hd ul li{ float:left; width:33.3%; text-align:center; font-size:16px; cursor:pointer; border-bottom:1px solid #fff;  }
+    .slideTxtBox .hd ul li.on{  border-bottom:1px solid #2888EA; cursor:pointer; color:#2888EA; font-weight:bold}
+    .slideTxtBox .bd{ display:block; margin-top:6px; }
+    .slideTxtBox .bd ul{ zoom:1;  }
+    .slideTxtBox .bd li{  background:#FFF; margin-bottom:5px; padding:10px 2%; }
+    .slideTxtBox .bd li .fbz{ display:block}
+    .slideTxtBox .bd li .fbz a.fbz_l{ display:block; width:72%; float:left;  font-size:16px;line-height:25px;}
+    .slideTxtBox .bd li .fbz a.fbz_r{ display:block; width:22%; float:right; font-size:12px; line-height:25px;color:#fe0000; text-align:right; }
+    .slideTxtBox .bd li .fbz a.fbz_r i{ font-size:18px; padding-right:5px; line-height:25px;}
+    .slideTxtBox .bd li .fbz a img{ display:block; float:left; width:40px; border-radius:50%; height:40px; margin-right:10px;}
+    .slideTxtBox .bd li .fbz a span{ display:block; float:left; line-height:22px; font-size:15px; color:#2888EA}
+    .slideTxtBox .bd li .fbz a span em{ line-height:18px; font-style:normal; display:block; font-size:12px; color:#666}
+    .slideTxtBox .bd li .xqq{ display:block;}
+    .slideTxtBox .bd li .xqq span{ display:block; line-height:26px; color:#444;}
+    .slideTxtBox .bd li .xqq .xqq_c{ display:block;}
+    .slideTxtBox .bd li .xqq .xqq_c a{ display:block; width:33.3%; float:left; height:90px; overflow:hidden;}
+    .slideTxtBox .bd li .xqq .xqq_c a img{ display:block; width:95%; min-height:90px; border-radius:5px;}
+    .slideTxtBox .bd ul.miao-list-view li{ margin-bottom:0px; padding:0px;}
+    .slideTxtBox .bd li .xqq .xqq_b{ position:relative}
+    .slideTxtBox .bd li .xqq .xqq_b a{ line-height:30px; font-size:12px; color:#777;}
+    .slideTxtBox .bd li .xqq .xqq_b a span{ padding-left:10px; display:inline-block; color:#777}
+    .head-bar-right .bds_more { display:block; margin-top:12px;height: 22px;background:url('http://www.jiancaigood.com/mobile/static/img/ffxx.png') no-repeat center center; line-height: 22px;vertical-align: middle; padding-left:0; width:30px; margin-right:0px;}
+    .bdshare_popup_box{ display:none !important}
+    #guanbi{ display:block; position:absolute; right:18px; top:10px;}
+    #guanbi i{ display:block; font-size:18px; color:#555;}
+    #tankuang { display:none; position:fixed; bottom:0px; padding-bottom:18px; background:#EFEFF4; left:0px; width:100%; z-index:999;}
+    #tankuang h2{ display:block; font-size:18px; text-align:center; font-weight:normal; padding-bottom:8px;}
+    #tankuang ul li{ display:block; width:20%; float:left; text-align:center;}
+    #tankuang ul li a { width: 60px!important; height: 60px!important; margin: 0 auto 10px!important; float: none!important; padding: 0!important; display: block; }
+    #tankuang ul li a img { width:65%; border-radius:50%; background:#FFF; display:block; margin:0 auto; }
+    #tankuang ul li a span{ display:block; line-height:32px; padding-top:5px;}
+    .list-img100{height: 70px;}
+</style>
+
+{/block}
+
+    {block name="body"}﻿
+
+
+    <div id="head-bar">
+        <div class="head-bar">
+            <div class="head-bar-left">
+                <a href="/"><img src="__TMPL__/images/icon-sort.png" width="24" height="24"/></a>
+            </div>
+            <div class="head-bar-title">{:config('cache.site_name')}</div>
+
+            <div class="head-bar-right">
+
+                <a onclick="hideandshow();"class="bds_more" data-cmd="more"></a>
+            </div>
+        </div>
+
+    </div>
+    <!--p1-->
+    <div class="home-search">
+        <div class="f_l so"><a href="{:url('/search')}"><img src="__TMPL__/images/ico-search.png"/><span>输入关键词搜索</span></a></div>
+    </div>
+    <!--p2大幻灯图，后台默认为14号位-->
+    <!--p3-->
+    <div class="quick">
+        <ul>
+            <li><a href="{:url('/category/transport')}"><img src="__TMPL__/images/nav1.png" width="46" height="46"/><span>货源供应</span></a></li>
+            <li><a href="{:url('/category/demand')}" data-transition="slideup"><img src="__TMPL__/images/nav2.png" width="46" height="46"/><span>需求信息</span></a></li>
+            <li><a href="{:url('/category/supply')}" data-transition="slideup"><img src="__TMPL__/images/nav3.png" width="46" height="46"/><span>运输信息</span></a></li>
+            <li><a href="{:url('/news')}" data-transition="slideup"><img src="__TMPL__/images/nav7.png" width="46" height="46"/><span>资讯头条</span></a></li>
+
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <!--头条-->
+    <div class="slideTxtBox">
+        <div class="hd">
+            <ul>
+                {volist name="category_list" id="cate"}
+                <li>{$cate['name']}</li>
+                {/volist}
+            </ul>
+        </div>
+        <div class="bd">
+            {volist name="category_list" id="cate"}
+            <ul>
+                {volist name="cate.list" id="foo"}
+                <li>
+
+                    <div class="xqq">
+                        <div class="fbz"><span><a href="{:url('/info/details')}/{$foo['id']}"  class="fbz_l">{$foo['title']}</a></span>
+                            <a href="tel:{$foo['username']}" class="fbz_r"><i class="iconfont icon-duihua"></i>拨打电话</a>
+                            <div class="clear"></div></div>
+                        <div class="xqq_b">
+                            <a href="{:url('/info/details')}/{$foo['id']}" style=" display:block;height:30px;width:100%;"></a>
+                            <a href="javascript:;" style=" display:inline-block; position:absolute; top:0px; left:0px; z-index:99;">{$foo['user_type']}</a>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </li>
+                {/volist}
+
+            </ul>
+            {/volist}
+        </div>
+    </div>
+    <script type="text/javascript">jQuery(".slideTxtBox").slide();</script>
+    <!--p13最新资讯-->
+    <div class="list-menuname">
+        <h2><span>今日头条</span></h2>
+        <h3>Today's headline</h3>
+    </div>
+    <div class="miao-index-title">
+        <ul class="miao-list-view">
+            {volist name="news" id="foo"}
+            <div class="list-img100">
+                <ul>
+                    <a href="{:url('/news/details')}/{$foo['id']}">
+                        <li class="list_1"><strong>{$foo['title']}</strong></li>
+                        <li class="list_2">{$foo['content']|clearhtml|restrlen=###,20}</li>
+                    </a>
+                </ul>
+
+            </div>
+
+            {/volist}
+        </ul>
+    </div>
+    <div class="mores"><a href="{:url('/news')}">更多&gt;</a></div>
+
+
+{/block}

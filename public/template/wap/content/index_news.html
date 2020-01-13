@@ -1,0 +1,30 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<style>
+.option_index .de_main_list .de_mall-cate li{max-width:50%!important;}
+</style>
+{/block}
+{block name="body"}
+<div id="head-bar">
+    <div class="head-bar">
+        <div class="head-bar-back">
+            <a href="/" data-direction="reverse"><img src="__TMPL__/images/icon-back.png" width="24" height="24"/><span>返回</span></a>
+        </div>
+        <div class="head-bar-title">资讯头条</div>
+    </div>
+    <div class="head-bar-fix"></div>
+</div>
+{volist name="list" id="foo"}
+<div class="list-img">
+    <a href="{:url('/news/details')}/{$foo['id']}"><img src="{$foo['thumb']}" width="80" height="60" alt="" onerror="this.src='__TMPL__/images/80x60.png';"/></a>
+    <ul>
+        <li><a href="{:url('/news/details')}/{$foo['id']}"><strong>{$foo['title']}</strong></a></li>
+        <li><em class="f_r">{$foo['add_time']}</em><span>浏览:{$foo['hits']}</span></li>
+    </ul>
+</div>
+{/volist}
+<div class="pages">{$list->render()}</div>
+
+
+{/block}
+

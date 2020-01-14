@@ -29,7 +29,7 @@ div id="head-bar">
             </div>
         </div>
         <div class="list-inp"><div class="bd-b"><input type="tel" name="mobile" id="mobile" placeholder="手机号码" value="" onblur="window.scrollTo(0,0);"/></div></div>
-        <div class="list-inp"><div class="bd-b"><input name="captcha" id="captcha" type="tel" size="6" placeholder="验证码" value="" class="input-captcha"/>&nbsp;<img src="{:url('/member/code')}" title="验证码,看不清楚?请点击刷新&#10;字母不区分大小写" alt="" align="absmiddle" id="captchapng" onclick="reloadcaptcha();" style="cursor:pointer;"/><span id="ccaptcha"></span>
+        <div class="list-inp"><div class="bd-b"><input name="captcha" id="captcha" type="tel" size="6" placeholder="验证码" value="" class="input-captcha"/>&nbsp;<img src="{:url('/member/code')}" title="验证码,看不清楚?请点击刷新&#10;字母不区分大小写" alt="" align="absmiddle" id="captchapng" onclick="reloadcaptcha();" style="cursor:pointer;position:relative;top: -10px;"/><span id="ccaptcha"></span>
             <script type="text/javascript">
                 function reloadcaptcha() {
                     Dd('captchapng').src = '{:url("/member/code")}&refresh='+Math.random();

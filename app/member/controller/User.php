@@ -114,7 +114,17 @@ class User extends Base {
 
     public function code(){
 
-        return captcha('member');
+        ob_clean();
+        $captcha = new \think\captcha\Captcha();
+        $captcha->imageW=290;
+        $captcha->imageH = 40;  //图片高
+        $captcha->fontSize =20;  //字体大小
+        $captcha->length   = 4;  //字符数
+        $captcha->fontttf = '5.ttf';  //字体
+        $captcha->expire = 30;  //有效期
+        $captcha->useNoise = false;  //不添加杂点
+        return $captcha->entry('member');
+
     }
 
 

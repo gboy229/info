@@ -66,7 +66,7 @@ class Info extends Base {
 
         $statistics=[];
         foreach ($status_arr as $k=>$v){
-            $statistics[$k]=model('Content/content')->where(['uid'=>$this->member['id'],'category_id'=>$category['id'],'display'=>$k])->count(1);
+            $statistics[$k]=model('content/Content')->where(['uid'=>$this->member['id'],'category_id'=>$category['id'],'display'=>$k])->count(1);
         }
 
 
@@ -81,7 +81,7 @@ class Info extends Base {
         if($kw && !in_array($kw,['*','/','\\'])){
             $sqlmap['title']=['like','%'.$kw.'%'];
         }
-        $list=model('Content/content')->where($sqlmap)->field('id,thumb,title,add_time')->order('id desc')->paginate();
+        $list=model('content/Content')->where($sqlmap)->field('id,thumb,title,add_time')->order('id desc')->paginate();
 
 
         $this->assign('category',$category)->assign('list',$list)->assign('status',$status)->assign('statistics',$statistics);

@@ -28,6 +28,7 @@
      <th width="200">等级名称</th>
      <th width="200">免费发布条数</th>
      <th width="200">每条费用</th>
+     <th width="200">置顶费用</th>
      <th width="100">操作</th>
     </tr>
    </thead>
@@ -40,6 +41,7 @@
      <td>{$foo['name']}</td>
      <td>{$foo['day_count']}</td>
      <td>{$foo['cost']}</td>
+     <td>{$foo['top_cost']}</td>
      <td>
       <div>
        <a class="green" href="{:url('edit',['id'=>$foo['id']])}"> <i class="icon-pencil bigger-130"></i> 编辑</a>

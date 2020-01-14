@@ -101,6 +101,8 @@ class Info extends Base {
                 showmessage('发布类型不正确');
             }
 
+
+
             $data=[];
             $data['title']=htmlentities(remove_xss(trim(input('title/s'))));
             $data['category_id']=$category['id'];

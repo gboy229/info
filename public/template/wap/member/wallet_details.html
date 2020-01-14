@@ -1,0 +1,38 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<style>
+    .list-set{background: none;}
+    .list-set div{background-image: none;padding-right: 15px;}
+    .list-set li{margin-bottom: 10px;}
+    .foot-bar {display: none;}
+</style>
+{/block}
+{block name="body"}
+
+<div id="head-bar">
+<div class="head-bar">
+    <div class="head-bar-back">
+        <a href="{:url('/member/wallet')}" data-direction="reverse"><img src="__TMPL__/images/icon-back.png" width="24" height="24"/><span>返回</span></a>
+    </div>
+    <div class="head-bar-title">钱包明细</div>
+
+</div>
+<div class="head-bar-fix"></div>
+</div>
+<div class="blank-35"></div>
+<div class="list-set">
+    <ul>
+        {volist name="list" id="foo"}
+        <li>
+            <div><span>{$foo['value']}元</span>{$foo['msg']}</div>
+            <div class="t">{$foo['dateline']}</div>
+        </li>
+        {/volist}
+
+    </ul>
+
+</div>
+<div class="pages">{$list->render()}</div>
+
+
+{/block}

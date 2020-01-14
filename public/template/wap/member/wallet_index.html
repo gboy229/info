@@ -1,0 +1,38 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<style>
+    .foot-bar {display: none;}
+</style>
+{/block}
+{block name="body"}
+
+<div id="head-bar">
+<div class="head-bar">
+    <div class="head-bar-back">
+        <a href="{:url('/member')}" data-direction="reverse"><img src="__TMPL__/images/icon-back.png" width="24" height="24"/><span>返回</span></a>
+    </div>
+    <div class="head-bar-title">我的钱包</div>
+    <div class="head-bar-right">
+        <a href="{:url('/member/wallet/details')}"><span>明细</span></a>
+    </div>
+</div>
+<div class="head-bar-fix"></div>
+</div>
+<div class="blank-35"></div>
+<div class="list-set">
+    <ul>
+        <li><div><span>{$member['money']}元</span>余额</div></li>
+        <li><div><span>{$info['day_count']}条</span>每天免费条数</div></li>
+        <li><div><span>{$info['cost']}元</span>每条收费</div></li>
+        <li><div><span>{$info['top_cost']}元</span>置顶收费</div></li>
+
+    </ul>
+
+</div>
+
+<div class="blank-35"></div>
+
+<div style="padding:0 16px;"><input type="submit" name="submit" value="微信充值" class="btn-green"></div>
+
+
+{/block}

@@ -874,21 +874,17 @@ class Member extends Model{
      * @param boolean $iswritelog
      * @return boolean 状态
      */
-    public function change_account($os_type,$mid, $field ,$num, $msg = '',$iswritelog = TRUE) {
+    public function change_account($mid, $field ,$num, $msg = '',$iswritelog = TRUE) {
 
-
-        if(!$_wallets=$this->wallets_db->where(['mid'=>$mid])->find()){
-            $this->errors='钱包账户不存在';
-            return false;
-        }
+        $_member=db('member')->where(['id'=>$mid])->field('id,realname,username,money')->find();
 
 
         if(strpos($num, '-') === false && strpos($num, '+') === false) $num = '+'.$num;
         if(strpos($num, '-') === false){
             //累计
-            $result = $this->wallets_db->where(['mid' => $mid])->setInc($field,$num);
+            $result =db('member')->where(['id' => $mid])->setInc($field,$num);
         }else{
-            $result = $this->wallets_db->where(['mid' => $mid])->setDec($field,abs($num));
+            $result =db('member')->where(['id' => $mid])->setDec($field,abs($num));
         }
 
         if($result === false) {
@@ -896,13 +892,12 @@ class Member extends Model{
             return FALSE;
         }
         if($iswritelog === true) {
-            $_member=db('member')->where(['id'=>$mid])->field('id,realname,username')->find();
 
-            $new_money=$this->wallets_db->where(['mid'=>$mid])->value($field);
 
-            $money_arr=['old_money'=>$_wallets[$field],'new_money' => sprintf('%.4f' ,$new_money)];
+            $new_money=db('member')->where(['id'=>$mid])->value($field);
+
+            $money_arr=['old_money'=>$_member[$field],'new_money' => sprintf('%.2f' ,$new_money)];
             $log_info = [
-                'os_type'  =>$os_type,
                 'mid'      => $mid,
                 'user'      => $_member['username'],
                 'realname'      => $_member['realname'],
@@ -922,70 +917,7 @@ class Member extends Model{
     }
 
 
-    public function change_wallet($fromaccount,$toaccount,$type,$mid, $field ,$num, $msg = '',$iswritelog = TRUE) {
 
-
-        $info=db('member_account')->where(['mid'=>$mid])->find();
-        if(!$info){
-            $_member=$this->model->where(['id'=>$mid])->field('id,username,realname')->find();
-            $new_account=get_eth_new_account();
-            $data=[];
-            $data['mid']=$mid;
-            $data['user']=$_member['username'];
-            $data['realname']=$_member['realname'];
-            $data['okplus_address']=$new_account;
-            $data['eth_address']=$new_account;
-            $data['plus_money']=0;
-            $data['update_time']=time();
-            db('member_account')->insertGetId($data);
-        }
-
-
-        $old_money=db('member_account')->where(['mid'=>$mid])->value($field);
-
-        if(strpos($num, '-') === false && strpos($num, '+') === false) $num = '+'.$num;
-        if(strpos($num, '-') === false){
-            //累计
-            $result = db('member_account')->where(['mid' => $mid])->setInc($field,$num);
-        }else{
-            $result = db('member_account')->where(['mid' => $mid])->setDec($field,abs($num));
-
-        }
-
-        if($result === false) {
-            $this->errors = lang('_operation_fail_');
-            return FALSE;
-        }
-        if($iswritelog === true) {
-
-            if(!$_member=$this->model->where(['id'=>$mid])->field('id,username,realname')->find()){
-                return false;
-            }
-
-            $new_accmount=db('member_account')->where(['mid'=>$mid])->value($field);
-
-
-            $money_arr=array('old_money'=>$old_money,'new_money' => $new_accmount);
-
-            $data=[];
-            $data['fromaccount']=$fromaccount;
-            $data['toaccount']=$toaccount;
-            $data['type']=$type;
-            $data['mid']=$_member['id'];
-            $data['user']=$_member['username'];
-            $data['realname']=$_member['realname'];
-            $data['money']=abs($num);
-            $data['money_arr']=json_encode($money_arr);
-            $data['add_time']=time();
-            $data['msg']=$msg;
-            $add_id=db('currency_list')->insertGetId($data);
-            if(!$add_id){
-                return false;
-            }
-        }
-
-        return TRUE;
-    }
 
     public function tree($pid){
 

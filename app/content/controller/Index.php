@@ -21,7 +21,7 @@ class Index extends Base{
         $category_list=db('category')->where(['id'=>['in',[1,2,3]],'display'=>1])->field('id,name,dir_name')->order('sort desc,id desc')->select();
 
         foreach ($category_list as $k=>$v){
-            $category_list[$k]['list']=model('Content/content')->where(['category_id'=>$v['id'],'display'=>3])->order('id desc')->limit(15)->select();
+            $category_list[$k]['list']=model('content/Content')->where(['category_id'=>$v['id'],'display'=>3])->order('id desc')->limit(15)->select();
         }
 
 

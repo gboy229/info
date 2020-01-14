@@ -24,6 +24,19 @@ class MemberLog extends Model{
 
 
 
+    protected function getTypeAttr($value){
+
+        $type_arr=['money'=>'余额',
+        ];
+
+
+
+        $type_arr=$type_arr[$value];
+
+
+        return $type_arr;
+
+    }
 
 
     public function getMoneyDetailAttr($value){

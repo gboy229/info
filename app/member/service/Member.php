@@ -61,14 +61,7 @@ class Member extends Model{
 
     public function get_list($sqlmap,$field='*'){
 
-        /*
-        $page=input('page/d');
 
-
-        $subQuery = $this->model->field('id')->order('id desc')->page($page)->limit(20)->buildSql();
-
-        $lists=$this->model->table($subQuery)->alias('a')->join(' member b ','a.id=b.id','left')->paginate();
-        */
 
         $lists = $this->model->field($field)->where($sqlmap)->order('id desc')->paginate();
 

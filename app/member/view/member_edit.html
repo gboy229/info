@@ -17,8 +17,8 @@
                     <ul class="nav nav-tabs" >
                         <li class="active"><a data-toggle="tab" href="#tag1">基本信息</a></li>
 
-                        <li><a data-toggle="tab" href="#tag5">认证信息</a></li>
-                        <li><a data-toggle="tab" href="#tag4">推荐人</a></li>
+                        <li style="display: none;"><a data-toggle="tab" href="#tag5">认证信息</a></li>
+
 
                     </ul>
 
@@ -31,16 +31,15 @@
 								<?php 
 								 echo  \form\Form::input('text','username',$info['username'],'会员名','会员名不能重复',$info['username']?array('disabled'=>'disabled'):'');
 								 echo  \form\Form::input('text','password','','登录密码','不修改则不填写');
-								 echo  \form\Form::input('text','two_password','','交易密码','不修改则不填写');
+
 								 echo  \form\Form::input('select','group_id',$info['group_id'],'会员组','会员所属分组',array('items'=>$member_group));
 
 								 echo  \form\Form::input('text','realname',$info['realname'],'真实姓名','会员的真实姓名');
 
 								 echo  \form\Form::input('text','email',$info['email'],'邮箱','会员邮箱');
 
-								 echo  \form\Form::input('radio','is_lock',$info['is_lock'],'状态','会员登录状态，锁定后不能登录',array('items'=>array(0=>'正常',1=>'封号',2=>'冻结(超时付款)',3=>'冻结(超时确认)')));
+								 echo  \form\Form::input('radio','is_lock',$info['is_lock'],'状态','会员登录状态，锁定后不能登录',array('items'=>array(0=>'正常',1=>'封号')));
 								
-								 echo  \form\Form::input('calendar','lock_time',$info['lock_time'],'封号到期时间','封号到期时间');
 								 echo  \form\Form::input('text','lock_info',$info['lock_info'],'封号说明','封号说明');
 								 echo  \form\Form::input('text','',$info['register_time'],'注册时间','会员注册时间',array('disabled'=>'disabled'));
 								 echo  \form\Form::input('text','',$info['register_ip'],'注册IP','会员注册IP',array('disabled'=>'disabled'));
@@ -51,32 +50,12 @@
 								?>
                             </div>
 
-                        
-
-
-
-
-
-                            <div id="tag4" class="tab-pane ">
-								<?php
-
-								    $top_member=$info['top_member']?'<a href="'.url('edit',['id'=>$info['top_member']['id']]).'" target="_blank">查看推荐人信息</a>，':'';
-                                    echo  \form\Form::input('text','',$info['top_member']['username'],'推荐人账号',$top_member.'推荐人账号',['disabled'=>'disabled']);
-
-
-								?>
-                            </div>
 
                             <div id="tag5" class="tab-pane ">
 								<?php
 
                                     echo  \form\Form::input('radio','is_auth',$info['is_auth'],'实名','实名状态',array('items'=>array(0=>'未实名',1=>'实名')));
-                                    echo  \form\Form::input('text','bank_name',$info['bank_name'],'开户行','开户行');
-                                    echo  \form\Form::input('text','id_card',$info['id_card'],'身份证号','身份证号');
-                                    echo  \form\Form::input('text','bank_card',$info['bank_card'],'银行卡号','银行卡号');
                                     echo  \form\Form::input('text','alipay',$info['alipay'],'支付宝','支付宝');
-                                    echo  \form\Form::input('upload','alipay_ewm',$info['alipay_ewm'],'支付宝收款码','支付宝收款码',array('num'=>1,'input'=>'alipay_ewm',''));
-                                    echo  \form\Form::input('upload','wechat_ewm',$info['wechat_ewm'],'微信收款码','微信收款码',array('num'=>1,'input'=>'wechat_ewm',''));
                                     echo  \form\Form::input('text','wechat',$info['wechat'],'微信号','微信号');
 
 								?>

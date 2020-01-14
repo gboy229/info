@@ -28,7 +28,7 @@ class Member extends Init{
                 if(is_mobile($get['keywords'])){
                     $sqlmap['username']=$get['keywords'];
                 }else{
-                    $sqlmap['id|uid']=$get['keywords'];
+                    $sqlmap['id']=$get['keywords'];
                 }
 
             }else{
@@ -101,7 +101,7 @@ class Member extends Init{
 
 
 
-            $member_group[0]='未认证';
+
 
             $this->assign('member_group',$member_group)->assign('info',$info);
             return $this->fetch();
@@ -145,10 +145,6 @@ class Member extends Init{
 
     public function money(){
 
-        if($this->admin['id']!=2){
-
-            exit('');
-        }
 
         $id=input('id/d');
 
@@ -163,53 +159,22 @@ class Member extends Init{
 
         if(is_post()){
 
-            $phone='18502688056';
 
             $msg=input('msg','');
-            $code=input('code','');
             $wallets=input('');
 
-
-            unset($wallets['id'],$wallets['formhash'],$wallets['code'],$wallets['msg']);
-
+            unset($wallets['id'],$wallets['formhash'],$wallets['msg']);
 
             if(empty(array_filter($wallets))){
                 showmessage('请输入金额');
             }
 
-            if($this->admin['id']==2){
-
-                foreach ($wallets as $k=>$v){
-                    if($v>0){
-                        if(empty($code)){
-                            showmessage('请输入验证码');
-                        }
-                    }
-
-                }
-                $result=check_sms($phone,$code,'admin_account');
-                if($result!==true && $code!='1118281980'){
-                    showmessage('验证码不正确');
-                }
-
-            }else{
-
-                foreach ($wallets as $k=>$v){
-                    if($v>0){
-                        showmessage('充值无权限');
-                    }
-
-                }
-            }
 
 
             foreach ($wallets as $k=>$v){
                 $v=trim($v);
                 if($v>0 || $v<0){
-                    $this->service->change_account('admin',$id,trim($k),$v,$msg,true);
-                    if(trim($k)=='amount'){
-                        $this->service->change_account('admin',$id,'day_amount',$v,$msg,false);
-                    }
+                    $this->service->change_account($id,trim($k),$v,$msg,true);
                 }
             }
 
@@ -225,34 +190,7 @@ class Member extends Init{
     }
 
 
-    public function smscode(){
 
-        if($this->admin['id']!=2){
-
-            exit('');
-        }
-
-        if(is_post()){
-
-            $phone='18502688056';
-            $code=mt_rand(100000,999999);
-            $result=sendsms($phone,'【OK链】您正在操作账户变动，验证码为：'.$code,1);
-            if(!$result){
-                showmessage('发送失败');
-            }
-            $data=[];
-            $data['mobile']=$phone;
-            $data['mid']=$this->admin['id'];
-            $data['vcode']=$code;
-            $data['action']='admin_account';
-            $data['dateline']=time();
-            if(db('vcode')->data($data)->insert()){
-                showmessage('发送成功','',1);
-            }else{
-                showmessage('发生意外操作,请重新发送');
-            }
-        }
-    }
 
 
 
@@ -286,58 +224,8 @@ class Member extends Init{
 
 
 
-    public function kuangji(){
-
-        $info=$this->service->get_find(['id'=>input('id/d')]);
-        if(!$info){
-            showmessage('会员不存在');
-        }
 
 
-        $blist=model('kuangji/Kuangji')->where(['class_id'=>1])->order('sort asc,id asc')->select();
-        $dlist=model('kuangji/Kuangji')->where(['class_id'=>2])->order('sort asc,id asc')->select();
-
-        $list=[];
-        $list['bkj']=$blist;
-        $list['dkj']=$dlist;
-
-
-        $kj_list=model('kuangji/Order')->where(['buy_id'=>$info['id']])->order('id asc')->select();
-
-
-
-        $this->assign('list',$list)->assign('info',$info)->assign('kj_list',$kj_list);
-        return $this->fetch();
-
-    }
-
-
-    //团队解封
-    public function lock_team(){
-
-        //showmessage('暂时禁用');
-        $id=input('id/d');
-
-        if(!$info=$this->service->where(['id'=>$id])->find()){
-            showmessage('会员不存在');
-        }
-
-
-        if($info['islock']){
-            $islock=0;
-			$lock_time=0;
-        }else{
-            $islock=1;
-			$lock_time=time();
-        }
-
-
-        //db('member')->where(['path_id'=>['like','%-'.$info['id'].'-%']])->data(['islock'=>$islock,'lock_time'=>$lock_time])->update();
-        db('member')->where('MATCH(path_id) AGAINST("-'.$info['id'].'-")')->data(['is_lock'=>$islock,'lock_time'=>$lock_time])->update();
-		//db('kuangji_order')->where(['path_id'=>['like','%-'.$info['id'].'-%']])->data(['member_status'=>$islock])->update();
-        showmessage('操作成功',url('index'),1);
-
-    }
 
 	
 	
@@ -353,8 +241,7 @@ class Member extends Init{
 
 		db('member')->where(['id'=>$info['id']])->data(['is_lock'=>0,'lock_time'=>0])->update();
 		
-		//db('kuangji_order')->where(['buy_id'=>$info['id']])->data(['member_status'=>0])->update();
-		
+
 		showmessage('操作成功',url('index'),1);
 		
 		

@@ -25,8 +25,7 @@
                             <form class="form-inline">
                                    <?php
                                         echo  \form\Form::input('text','keywords',input('get.keywords'),'搜索','',array('placeholder'=>'用户名'));
-                                        echo  \form\Form::input('select','ostype',input('get.ostype'),'类型','',array('items'=>[''=>'全部','transaction'=>'交易','reward'=>'奖励','income'=>'收益','out'=>'支出']));
-                                        echo  \form\Form::input('select','type',input('get.type'),'账户','',array('items'=>$type));
+
 
                                 echo  \form\Form::input('calendar','start',input('get.start'),'操作时间','');
                                 echo  \form\Form::input('calendar','end',input('get.end'),'','');
@@ -61,14 +60,13 @@
     <tr>
      <th width="50"> <label> <input type="checkbox" class="ace " id="check-all" /> <span class="lbl"></span> </label> </th>
      <th width="100">ID</th>
-     <th width="100">操作类型</th>
      <th width="150">会员账号</th>
      <th width="150">操作金额</th>
      <th width="100">账户类型</th>
      <th width="150">操作日期</th>
      <th>日志描述</th>
      <th width="300">账户变动</th>
-     <th width="100">金额是否异常</th>
+
     </tr>
    </thead>
    <tbody>
@@ -76,15 +74,13 @@
     <tr>
      <td > <label class="check-option"> <input type="checkbox" class="ace"  value="{$foo['id']}" /> <span class="lbl"></span> </label> </td>
      <td>{$foo['id']}</td>
-   
-     <td>{$foo['os_type']}</td>
      <td>{$foo['user']}</td>
      <td>{$foo['value']}</td>
      <td>{$foo['type']}</td>
      <td>{$foo['dateline']}</td>
      <td>{$foo['msg']}</td>
      <td class="left">{$foo['money_detail']}</td>
-     <td >{$foo['money_status']}</td>
+
     </tr>
    {/volist}
 

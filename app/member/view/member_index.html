@@ -36,8 +36,6 @@
 
                             <form class="form-inline">
                                    <?php
-                                        echo  \form\Form::input('select','mtype',input('get.mtype'),'','',['placeholder'=>'如20-100','items'=>['0'=>'请选择','money'=>'可用余额','total_assets'=>'矿池','amount'=>'额度','shards_money'=>'碎片']]);
-                                        echo  \form\Form::input('text','bnum',input('get.bnum'),'','',array('placeholder'=>'如20-100'));
                                         echo  \form\Form::input('text','keywords',input('get.keywords'),'关键词','',array('placeholder'=>'手机号码/用户ID/姓名'));
                                         echo  \form\Form::input('select','group_id',input('get.group_id'),'等级','',array('items'=>$member_group));
                                         echo  \form\Form::input('select','islock',input('get.islock'),'状态','',$status_group);
@@ -78,8 +76,8 @@
      <th width="50">ID</th>
      <th width="300">会员</th>
      <th width="150">等级&姓名</th>
-     <th width="200">推荐人</th>
-     <th width="100">团队</th>
+
+
      <th width="170">账户</th>
      <th width="210">注册&登录</th>
      <th width="150">状态</th>
@@ -98,27 +96,15 @@
            <div class="info gboy-margin-top-10">
             <i class="blue icon-envelope bigger-120" title="邮箱：{$foo['email']}"></i>&nbsp;&nbsp;
             <i class="blue icon-mobile-phone bigger-130" title="手机：{$foo['username']}"></i>&nbsp;&nbsp;
-            <i class="blue icon-building bigger-110" title="点击查看收货地址"></i>
+
            </div>
      </td>
      <td  class="left">
-            <p>UID：{$foo['uid']}</p>
-             <p>默认等级：{$foo['group_name']}</p>
-            <p>姓名：{$foo['realname']}</p>
-     </td>
-
-        <td  class="left">
-            <p>推荐人账号：{$foo['top_member']['username']|default='无'}</p>
-            <p>推荐人姓名：{$foo['top_member']['realname']|default='无'}</p>
-     </td>   
-	 <td  class="left">
-            <p>直推：{$foo['push_num']|default='0'}</p>
-            <p>团队：{$foo['team_num']|default='0'}</p>
+             <p>等级：{$foo['group_name']}</p>
+            <p>姓名：{$foo['realname']} ({$foo['sex_text']})</p>
      </td>
      <td class="left">
-         <p>可用余额：{$foo['wallets']['money']}</p>
-         <p>碎片：{$foo['wallets']['shards_money']}</p>
-         <p>额度：{$foo['wallets']['amount']}</p>
+         <p>余额：{$foo['money']}</p>
      </td>
      <td class="left">
         <p>注册时间：{$foo['register_time']}</p>
@@ -134,21 +120,14 @@
 	  
 	   <a class="red" href="{:url('lock',['id'=>$foo['id']])}"> <i class="icon-remove bigger-130"></i> 解封</a>
 	   &nbsp;
-          {if condition="$admin['id'] eq 2 "}
+
        <a class="pink" href="{:url('money',['id'=>$foo['id']])}" data-iframe="true" data-iframe-title="钱包" data-iframe-width="300"  data-iframe-height="850" > <i class="icon-suitcase bigger-130"></i> 钱包</a>
+
           &nbsp;
-          {/if}
-		  
        <a class="green" href="{:url('edit',['id'=>$foo['id']])}"> <i class="icon-pencil bigger-130"></i> 编辑</a>
           &nbsp;
-
-       <a class="red" data-confirm="是否确认操作？"  href="{:url('lock_team',['id'=>$foo['id']])}"> <i class="icon-remove bigger-130"></i> 团解封</a>
-	   
-     
-
-          &nbsp;&nbsp;<!--
        <a class="red" data-confirm="是否确认删除？" href="{:url('delete',['id'=>$foo['id']])}"> <i class="icon-trash bigger-130"></i> 删除</a>
-       -->
+
       </div>
 
 

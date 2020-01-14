@@ -39,9 +39,9 @@
     {volist name="list" id="foo"}
     <div class="list-img">
         <input type="checkbox" name="itemid[]" value="{$foo['id']}" class="dsn" id="checkbox-{$foo['id']}"/>
-        <a href="{:url('/info/details',['itemid'=>$foo['id']])}"><img src="__TMPL__/images/80x60.png" width="80" height="60" alt="" onerror="this.src='__TMPL__/images/80x60.png';"/></a>
+        <a href="{:url('/info/details')}/{$foo['id']}"><img src="__TMPL__/images/80x60.png" width="80" height="60" alt="" onerror="this.src='__TMPL__/images/80x60.png';"/></a>
         <ul>
-            <li><em class="check" id="check-{$foo['id']}"></em><a href="{:url('edit',['itemid'=>$foo['id']])}" rel="external"><strong>{$foo['title']}</strong></a></li>
+            <li><em class="check" id="check-{$foo['id']}"></em><a href="{:url('edit',['name'=>$category['dir_name'],'itemid'=>$foo['id']])}" rel="external"><strong>{$foo['title']}</strong></a></li>
             <li><em class="sheet" id="sheet-{$foo['id']}"></em><span>{$foo['add_time']}</span></li>
         </ul>
     </div>

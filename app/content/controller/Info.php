@@ -21,9 +21,17 @@ class Info extends Base{
         $itemid=(int)  trim($route['itemid']);
 
 
-        if(!$itemid || (!$info=model('Content/content')->where(['id'=>$itemid,'display'=>3])->find())){
+        if(!$itemid || (!$info=model('Content/content')->where(['id'=>$itemid])->find())){
             $this->redirect('/','',302);
         }
+
+        if($this->member['id']!=$info['uid'] && $info['display']!=3){
+
+            $this->redirect('/','',302);
+
+        }
+
+
 
        db('content')->where(['id'=>$info['id']])->setInc('hits',1);
 

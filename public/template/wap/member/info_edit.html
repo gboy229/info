@@ -10,7 +10,7 @@
 <div id="head-bar">
     <div class="head-bar">
         <div class="head-bar-back">
-            <a href="?mid=5" data-direction="reverse"><img src="http://www.jiancaigood.com/mobile/static/img/icon-back.png" width="24" height="24"/><span>返回</span></a>
+            <a href="javascript:Dback();" data-direction="reverse"><img src="__TMPL__/images/icon-back.png" width="24" height="24"/><span>返回</span></a>
         </div>
         <div class="head-bar-title">{$category['name']}修改</div>
         <div class="head-bar-right">
@@ -30,12 +30,39 @@
 
         <p>信息标题<em>*</em><b id="dtitle"></b></p>
         <div><input name="title" type="text" id="title" value="{$info['title']}" maxlength="30"/></div>
-        <p>行业分类<em>*</em><b id="dcatid"></b></p>
-        <div><span id="load_category_1"><select onchange="load_category(this.value, 1);" name="catid"><option value="0">选择分类</option><option value="1">石子</option><option value="4">河沙</option><option value="11">机制砂</option><option value="12">毛石</option></select> </span>
+        <?php
+            $s_category=db('district')->where(['parent_id'=>1])->order('id asc')->select();
+        ?>
+        <p>行业分类</p>
+        <div><span >
+            <select onchange="load_category(this.value,'#category_tree');" name="cid">
+            <option value="0">选择分类</option>
+                {volist name="$s_category" id="mcate"}
+                <option value="{$mcate['id']}">{$mcate['name']}</option>
+                {/volist}
+            </select>
 
-        <section id="load_property" style="display:none;"></section>
+              <select id="category_tree" name="cid" style="display: none;">
 
-        <p>详细说明</p>
+             </select>
+        </span>
+            <?php
+            $d_category=db('district')->where(['parent_id'=>13])->order('id asc')->select();
+            ?>
+            <p>行业地区</p>
+            <div><span>
+            <select onchange="load_category(this.value,'#address_tree');" name="did">
+            <option value="0">选择地区</option>
+                {volist name="$d_category" id="mcate"}
+                <option value="{$mcate['id']}">{$mcate['name']}</option>
+                {/volist}
+            </select>
+
+              <select id="address_tree" name="did" style="display: none;">
+
+             </select>
+        </span>
+                <p>详细说明</p>
 </div>
 
 <div class="ui-editor-content" id="editor">
@@ -50,6 +77,10 @@
 </form>
 
 <script type="text/javascript">
+
+    $(function(){
+        init_category();
+    })
     function _p() {
         if(Dd('tag').value) {
             Ds('reccate');
@@ -70,5 +101,43 @@
 
     }
     var destoon_oauth = '0';
+
+    function load_category(catid,obj) {
+
+        $.post('{:url("/member/info/ajax")}', 'catid='+catid, function(data) {
+            html='';
+            html+='<option value="'+catid+'">全部</option>';
+            for(var i in data) {
+                html+='<option value="'+data[i]['id']+'">'+data[i]['name']+'</option>';
+            }
+            $(obj).show().html(html);
+        },'json');
+    }
+    
+    function init_category() {
+
+        arr='{$info['cid_path']}';
+
+        newarr=arr.split(',');
+
+        $('select').find("option[value='"+newarr[0]+"']").attr('selected',true);
+        load_category(newarr[0],'#category_tree');
+        setTimeout(function(){
+            $('select').find("option[value='"+newarr[1]+"']").attr('selected',true);
+        },500);
+
+
+        arr2='{$info['did_path']}';
+
+        newarr2=arr2.split(',');
+
+        $('select').find("option[value='"+newarr2[0]+"']").attr('selected',true);
+        load_category(newarr2[0],'#address_tree');
+        setTimeout(function(){
+            $('select').find("option[value='"+newarr2[1]+"']").attr('selected',true);
+        },500);
+
+
+    }
 </script>
 {/block}

@@ -27,7 +27,7 @@ class District extends Init{
 
     public function add() {
         $parent_id = input('parent_id/d');
-        $parent_pos = array('顶级地区');
+        $parent_pos = array('顶级');
         if ($parent_id > 0) {
             $parent_pos = $this->service->fetch_position($parent_id);
         }
@@ -52,7 +52,7 @@ class District extends Init{
         }
 
         $info = $this->service->get_find($id);
-        $parent_pos = array('顶级地区');
+        $parent_pos = array('顶级');
         if ($info['parent_id'] > 0) {
             $parent_pos = $this->service->fetch_position($info['id']);
         }

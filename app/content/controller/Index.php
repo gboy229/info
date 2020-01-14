@@ -40,6 +40,8 @@ class Index extends Base{
 
         $name=trim($route['name']);
 
+        $cid=(int) input('cid/d');
+        $did=(int) input('did/d');
 
         if($name){
             $category=db('category')->where(['dir_name'=>$name,'display'=>1])->field('id,name,dir_name')->find();
@@ -54,10 +56,22 @@ class Index extends Base{
             $sqlmap['category_id']=$category['id'];
         }
         $sqlmap['display']=3;
+
+
+        if($cid){
+            $sqlmap['cid_path']=['like','%,'.$cid.',%'];
+            $cid_name=db('district')->where(['id'=>$cid])->value('name');
+        }
+        if($did){
+            $sqlmap['did_path']=['like','%,'.$did.',%'];
+            $did_name=db('district')->where(['id'=>$did])->value('name');
+        }
+
         $list=model('Content/content')->where($sqlmap)->order('id desc')->paginate();
 
-        $this->assign('category_list',$category_list)->assign('list',$list)->assign('name',$name)->assign('category',$category);
 
+        $this->assign('category_list',$category_list)->assign('list',$list)->assign('name',$name)->assign('category',$category);
+        $this->assign('cid_name',$cid_name)->assign('did_name',$did_name);
         return $this->fetch();
     }
 

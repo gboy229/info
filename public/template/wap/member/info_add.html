@@ -14,7 +14,7 @@
         </div>
         <div class="head-bar-title">{$category['name']}发布</div>
         <div class="head-bar-right">
-            <a href="{:url('lists',['name'=>$category['dir_name']])}"><span>取消</span></a>
+            <a href="{:url('lists')}/{$category['dir_name']}"><span>取消</span></a>
         </div>
     </div>
     <div class="head-bar-fix"></div>
@@ -29,11 +29,39 @@
 
         <p>信息标题<em>*</em><b id="dtitle"></b></p>
         <div><input name="title" type="text" id="title" value="" maxlength="30"/></div>
-        <p>行业分类<em>*</em><b id="dcatid"></b></p>
-        <div><span id="load_category_1"><select onchange="load_category(this.value, 1);" name="catid"><option value="0">选择分类</option><option value="1">石子</option><option value="4">河沙</option><option value="11">机制砂</option><option value="12">毛石</option></select> </span>
 
-        <section id="load_property" style="display:none;"></section>
+        <?php
+            $s_category=db('district')->where(['parent_id'=>1])->order('id asc')->select();
+        ?>
+        <p>行业分类</p>
+        <div><span >
+            <select onchange="load_category(this.value,'#category_tree');" name="cid">
+            <option value="0">选择分类</option>
+                {volist name="$s_category" id="mcate"}
+                <option value="{$mcate['id']}">{$mcate['name']}</option>
+                {/volist}
+            </select>
 
+              <select id="category_tree" name="cid" style="display: none;">
+
+             </select>
+        </span>
+            <?php
+            $d_category=db('district')->where(['parent_id'=>13])->order('id asc')->select();
+            ?>
+            <p>行业地区</p>
+            <div><span>
+            <select onchange="load_category(this.value,'#address_tree');" name="did">
+            <option value="0">选择地区</option>
+                {volist name="$d_category" id="mcate"}
+                <option value="{$mcate['id']}">{$mcate['name']}</option>
+                {/volist}
+            </select>
+
+              <select id="address_tree" name="did" style="display: none;">
+
+             </select>
+        </span>
         <p>详细说明</p>
 </div>
 
@@ -69,5 +97,17 @@
 
     }
     var destoon_oauth = '0';
+
+    function load_category(catid,obj) {
+
+        $.post('{:url("/member/info/ajax")}', 'catid='+catid, function(data) {
+            html='';
+            html+='<option value="'+catid+'">全部</option>';
+            for(var i in data) {
+                html+='<option value="'+data[i]['id']+'">'+data[i]['name']+'</option>';
+            }
+            $(obj).show().html(html);
+        },'json');
+    }
 </script>
 {/block}

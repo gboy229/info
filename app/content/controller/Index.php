@@ -25,7 +25,7 @@ class Index extends Base{
         }
 
 
-        $news=model('Content/content')->where(['display'=>1,'path_id'=>['like','%,4,%']])->order('id desc')->limit(15)->select();
+        $news=model('content/Content')->where(['display'=>1,'path_id'=>['like','%,4,%']])->order('id desc')->limit(15)->select();
 
         $this->assign('category_list',$category_list)->assign('news',$news);
         return $this->fetch();
@@ -67,7 +67,7 @@ class Index extends Base{
             $did_name=db('district')->where(['id'=>$did])->value('name');
         }
 
-        $list=model('Content/content')->where($sqlmap)->order('id desc')->paginate();
+        $list=model('content/Content')->where($sqlmap)->order('id desc')->paginate();
 
 
         $this->assign('category_list',$category_list)->assign('list',$list)->assign('name',$name)->assign('category',$category);
@@ -83,7 +83,7 @@ class Index extends Base{
 
         $sqlmap['path_id']=['like','%,4,%'];
         $sqlmap['display']=1;
-        $list=model('Content/content')->where($sqlmap)->order('id desc')->paginate();
+        $list=model('content/Content')->where($sqlmap)->order('id desc')->paginate();
 
         $this->assign('list',$list);
 
@@ -113,7 +113,7 @@ class Index extends Base{
             $sqlmap['category_id']=$category['id'];
             $sqlmap['display']=3;
             $sqlmap['title']=['like','%'.$kw.'%'];
-            $list=model('Content/content')->where($sqlmap)->order('id desc')->paginate();
+            $list=model('content/Content')->where($sqlmap)->order('id desc')->paginate();
         }
 
 

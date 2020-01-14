@@ -1005,9 +1005,30 @@ function request_post($url = '', $post_data = array()) {
 function sendsms($mobile,$content){
 
 
+    $msg = '【石材信息网】' . $content;
+    $url = "http://service.winic.org:8009/sys_port/gateway/index.asp?";
+    $data = "id=%s&pwd=%s&to=%s&content=%s&time=";
+    $id = 'kptest';
+    $pwd = 'x618196';
+    $to = $mobile;
+    $content = iconv("UTF-8", "GB2312", $msg);
+    $rdata = sprintf($data, $id, $pwd, $to, $content);
 
 
-    return true;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $rdata);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $result = curl_exec($ch);
+    curl_close($ch);
+    $result = substr($result, 0, 3);
+
+    if ($result == '000') {
+        return true;
+    } else {
+        return false;
+    }
 
 
 }

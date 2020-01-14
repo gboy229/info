@@ -20,9 +20,9 @@ class Index extends Base {
 
 
         if($this->member['id'] < 1){
-            $tpl='User/index';
+            $tpl='user/index';
         }else{
-            $tpl='Index/index';
+            $tpl='index/index';
         }
 
 

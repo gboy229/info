@@ -21,7 +21,7 @@ class Info extends Base{
         $itemid=(int)  trim($route['itemid']);
 
 
-        if(!$itemid || (!$info=model('Content/content')->where(['id'=>$itemid])->find())){
+        if(!$itemid || (!$info=model('content/Content')->where(['id'=>$itemid])->find())){
             $this->redirect('/','',302);
         }
 
@@ -35,7 +35,7 @@ class Info extends Base{
 
        db('content')->where(['id'=>$info['id']])->setInc('hits',1);
 
-        $user_info=model('Member/member')->where(['id'=>$info['uid']])->find();
+        $user_info=model('member/Member')->where(['id'=>$info['uid']])->find();
         $this->assign('info',$info)->assign('user_info',$user_info);
         return $this->fetch();
 
@@ -47,7 +47,7 @@ class Info extends Base{
         $route=$request->route();
         $itemid=(int)  trim($route['id']);
 
-        if(!$itemid || (!$info=model('Content/content')->where(['id'=>$itemid,'display'=>1,'path_id'=>['like','%,4,%']])->find())){
+        if(!$itemid || (!$info=model('content/Content')->where(['id'=>$itemid,'display'=>1,'path_id'=>['like','%,4,%']])->find())){
             $this->redirect('/','',302);
         }
 

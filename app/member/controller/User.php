@@ -116,7 +116,7 @@ class User extends Base {
 
         ob_clean();
         $captcha = new \think\captcha\Captcha();
-        $captcha->imageW=290;
+        $captcha->imageW=155;
         $captcha->imageH = 40;  //图片高
         $captcha->fontSize =20;  //字体大小
         $captcha->length   = 4;  //字符数

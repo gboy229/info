@@ -28,8 +28,8 @@ div id="head-bar">
                 <input type="radio" name="regid" value="1" id="g_5" onclick="Dreg(0);"><label for="g_5"> 个人会员</label>
             </div>
         </div>
-        <div class="list-inp"><div class="bd-b"><input type="tel" name="mobile" id="mobile" placeholder="手机号码" value="13430652525" onblur="window.scrollTo(0,0);"/></div></div>
-        <div class="list-inp"><div class="bd-b"><input name="captcha" id="captcha" type="tel" size="6" placeholder="验证码" value="123456" class="input-captcha"/>&nbsp;<img src="{:url('/member/code')}" title="验证码,看不清楚?请点击刷新&#10;字母不区分大小写" alt="" align="absmiddle" id="captchapng" onclick="reloadcaptcha();" style="cursor:pointer;"/><span id="ccaptcha"></span>
+        <div class="list-inp"><div class="bd-b"><input type="tel" name="mobile" id="mobile" placeholder="手机号码" value="" onblur="window.scrollTo(0,0);"/></div></div>
+        <div class="list-inp"><div class="bd-b"><input name="captcha" id="captcha" type="tel" size="6" placeholder="验证码" value="" class="input-captcha"/>&nbsp;<img src="{:url('/member/code')}" title="验证码,看不清楚?请点击刷新&#10;字母不区分大小写" alt="" align="absmiddle" id="captchapng" onclick="reloadcaptcha();" style="cursor:pointer;"/><span id="ccaptcha"></span>
             <script type="text/javascript">
                 function reloadcaptcha() {
                     Dd('captchapng').src = '{:url("/member/code")}&refresh='+Math.random();
@@ -43,13 +43,13 @@ div id="head-bar">
                     });
                 });
             </script></div></div>
-        <div class="list-inp"><div class="bd-b"><input type="tel" name="code" id="code" placeholder="短信验证码" value="123456" onblur="window.scrollTo(0,0);" style="width:120px;"/><a href="javascript:;" class="b" onclick="Ssend();" id="send">发送短信</a></div></div>
+        <div class="list-inp"><div class="bd-b"><input type="tel" name="code" id="code" placeholder="短信验证码" value="" onblur="window.scrollTo(0,0);" style="width:120px;"/><a href="javascript:;" class="b" onclick="Ssend();" id="send">发送短信</a></div></div>
 
         <div class="list-inp gh"><div class="bd-b"><input type="text" name="company" id="company" placeholder="公司全称，注册后不可更改" onblur="Dvalidator('company');"/></div></div>
         <!--<div class="list-inp"><div class="bd-b"><input type="text" name="post[username]" id="username" placeholder="会员名称，不支持中文" onblur="Dvalidator('username');" autocomplete="off" /></div></div>-->
         <div class="list-inp"><div class="bd-b"><input type="password" name="password" id="password" placeholder="6-18位数字或字母，密码需包含数字" onblur="Dvalidator('password');" autocomplete="off"/></div></div>
         <div class="list-inp"><div class="bd-b"><input type="password" name="cpassword" id="cpassword" placeholder="再输入一遍登录密码" onblur="Dvalidator('cpassword');" autocomplete="off"/></div></div>
-        <div class="list-inp"><div class="bd-b"><input type="checkbox" checked="checked" name="read" id="read" value="1" onclick="if(this.checked){Ds('sbm');}else{Dh('sbm');}"/> <a href="register.php?action=read"  data-transition="slideup">我已阅读并同意服务条款</a></div></div>
+        <div class="list-inp"><div class="bd-b"><input type="checkbox" checked="checked" name="read" id="read" value="1" onclick="if(this.checked){Ds('sbm');}else{Dh('sbm');}"/> <a href="javascript:;"  data-transition="slideup">我已阅读并同意服务条款</a></div></div>
         <div class="blank-20"></div>
         <div class="list-btn"><input type="submit" name="submit" value="立即注册" class="btn-blue"/></div>
         <div class="blank-20"></div>

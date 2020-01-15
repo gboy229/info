@@ -22,6 +22,7 @@ Route::rule('/member/login$','member/User/login');
 Route::rule('/member/register$','member/User/register');
 Route::rule('/member/logout$','member/User/logout');
 Route::rule('/member/code$','member/User/code');
+Route::rule('/member/getpwd','member/User/getpwd');
 Route::rule('/member/sms','member/User/sms');
 Route::rule('/member$','member/Index/index');
 Route::rule('/member/info/lists/:name','member/Info/lists');

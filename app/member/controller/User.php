@@ -71,6 +71,7 @@ class User extends Base {
         if(is_post()){
 
             $phone=trim($_POST['mobile']);
+            $action=trim($_POST['action']);
 
             if(empty($phone)){
                 showmessage('请输入手机号码');
@@ -80,10 +81,19 @@ class User extends Base {
                 showmessage('手机号码格式不对');
             }
 
+            if($action=='getpwd'){
+                if(!db('member')->where(['username'=>$phone])->value('id')){
+                    showmessage('手机未注册');
+                }
 
-            if(db('member')->where(['username'=>$phone])->value('id')){
-                showmessage('此手机号码已被注册了');
+                $action='getpwd';
+            }else{
+                if(db('member')->where(['username'=>$phone])->value('id')){
+                    showmessage('此手机号码已被注册了');
+                }
+                $action='register';
             }
+
 
             $result=to_sendsms($phone);
             if($result['status']!=1){
@@ -93,7 +103,7 @@ class User extends Base {
             $data['mobile']=$phone;
             $data['mid']=0;
             $data['vcode']=$result['result'];
-            $data['action']='register';
+            $data['action']=$action;
             $data['dateline']=time();
             if(db('vcode')->data($data)->insert()){
                 showmessage($result['message'],'',1);
@@ -102,6 +112,32 @@ class User extends Base {
             }
         }
 
+    }
+
+    public function getpwd(){
+
+        if(is_ajax()){
+            $post=input('post.','');
+            $captcha = new \think\captcha\Captcha();
+            if(!$captcha->check(trim($post['captcha']),'member')){
+                showmessage('验证码不正确');
+            }
+
+            $data=[];
+
+            $data['mobile']=trim($post['mobile']);
+            $data['code']=trim($post['code']);
+            $data['password']=$post['loginpwd'];
+            $data['repassword']=$post['loginpwd2'];
+
+            if(!$this->member_service->get_login_pwd($data)){
+                showmessage($this->member_service->errors);
+            }
+
+            showmessage('登录密码修改成功，请登录',url('/member/login'),1);
+        }else{
+            return $this->fetch();
+        }
     }
 
 

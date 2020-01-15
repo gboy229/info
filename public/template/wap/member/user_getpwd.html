@@ -1,0 +1,113 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<style>
+    .foot-bar{display: none;}
+</style>
+{/block}
+{block name="body"}
+<div id="head-bar">
+    <div class="head-bar">
+        <div class="head-bar-back">
+            <a href="javascript:Dback();"><img src="__TMPL__/images/icon-back.png" width="24" height="24"/><span>返回</span></a>
+        </div>
+        <div class="head-bar-title">找回密码</div>
+        <div class="head-bar-right"><a href="{:url('/member/login')}"><span>取消</span></a></div>
+    </div>
+    <div class="head-bar-fix"></div>
+</div>
+<form method="post" action="?" onsubmit="return check();">
+    <input type="hidden" name="action" value="sms"/>
+    <input type="hidden" name="step" value="1"/>
+    <div class="ui-form">
+        <p>手机号码<em>*</em><b id="dmobile"></b></p>
+        <div><input type="tel" name="mobile" id="mobile" value="" maxlength="11" placeholder="手机号码"/></div>
+        <p>手机验证码<em>*</em></p>
+        <div><input type="tel" name="code" id="code" placeholder="短信验证码" value="" maxlength="6" onblur="window.scrollTo(0,0);" style="width:120px;"/><a href="javascript:;" style="margin-left: 20px;" class="b" onclick="Ssend();" id="send">发送短信</a></div>
+        <p>新密码<em>*</em></p>
+        <div><input type="password" name="loginpwd" value="" placeholder="新密码"/></div>
+        <p>确认新密码<em>*</em></p>
+        <div><input type="password" name="loginpwd2"  value="" placeholder="确认新密码"/></div>
+        <p>验证码<em>*</em><b id="dcaptcha"></b></p>
+        <div><input name="captcha" id="captcha" type="tel" size="6"  maxlength="6" placeholder="验证码" class="input-captcha"/>&nbsp;<img src="{:url('/member/code')}" title="验证码,看不清楚?请点击刷新&#10;字母不区分大小写" alt="" align="absmiddle" id="captchapng" onclick="reloadcaptcha();" style="cursor:pointer;"/><span id="ccaptcha"></span>
+            <script type="text/javascript">
+                function reloadcaptcha() {
+                    Dd('captchapng').src = '{:url(\'/member/code\')}?action=image&refresh='+Math.random();
+                    Dd('ccaptcha').innerHTML = '';
+                    Dd('captcha').value = '';
+                }
+                function Sstop() {
+                    var i = 180;
+                    var interval=window.setInterval(
+                        function() {
+                            if(i == 0) {
+                                $('#send').html('发送短信');
+                                $('#sendok').html('');
+                                clearInterval(interval);
+                            } else {
+                                $('#send').html('重新发送('+i+'秒)');
+                                i--;
+                            }
+                        },
+                        1000);
+                }
+                function Ssend() {
+                    if($('#send').html().indexOf('秒') != -1) {
+                        Dtoast('请耐心等待');
+                        return false;
+                    }
+                    if(Dd('mobile').value.length < 11) {
+                        Dtoast('请输入手机号码');
+                        return false;
+                    }
+
+                    $.post('{:url('/member/sms')}', 'action=getpwd&mobile='+Dd('mobile').value, function(data) {
+                        if(data.status == '1') {
+                            $('#sendok').html('短信发送成功');
+                            Sstop();return;
+                        } else {
+                            Dtoast(data.message);
+                        }
+
+                    },'json');
+                }
+                function is_captcha(v) {
+                    if(v.match(/^[a-z0-9A-Z]{1,}$/)) {
+                        return v.match(/^[a-z0-9A-Z]{4,}$/);
+                    } else {
+                        return v.length > 1;
+                    }
+                }
+                $(function() {
+                    $('#captcha').bind('keyup blur', function() {
+                        checkcaptcha($('#captcha').val());
+                    });
+                });
+            </script></div>
+        <div class="blank-16"></div>
+        <input type="submit" name="submit" value="确认" class="btn-blue"/>
+        <div class="blank-32"></div>
+    </div>
+</form>
+<script type="text/javascript">
+    function check() {
+        if(Dd('mobile').value.length < 11) {
+            Dtoast('请填写手机号码');
+            return false;
+        }
+
+        $.post('{:url("/member/getpwd")}',$('form').serialize(),function(data){
+            if(data.status=='0'){
+                Dtoast(data.message);
+
+            }else{
+                Dtoast(data.message);
+                setTimeout(function(){
+                    location.href=data.referer;
+                },1000);
+            }
+
+        },'json');
+        return  false;
+    }
+</script>
+{/block}

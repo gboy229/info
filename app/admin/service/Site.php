@@ -45,6 +45,7 @@ class Site extends Model
 		$array[10]='安全配置';
 		$array[11]='性能配置';
 		$array[12]='缩略图设置';
+		$array[13]='发布配置';
 
 
 		

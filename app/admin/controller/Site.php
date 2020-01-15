@@ -138,7 +138,31 @@ class Site extends Init
     }
 
 
+    public function release()
+    {
 
+        if (request()->isPost()) {
+
+
+            if (!$this->service->submit($_POST, 'cache.php')) {
+                showmessage($this->service->errors);
+            }
+
+            showmessage(lang('_operation_success_'), url('release'), 1);
+
+        } else {
+
+            $group_list = $this->service->group([13]);
+
+            $list = $this->get_list($group_list);
+
+            $this->assign('list', $list);
+            $this->assign('group_list', $group_list);
+            return $this->fetch('base');
+        }
+
+
+    }
 
     //安全配置
     public function safe(){

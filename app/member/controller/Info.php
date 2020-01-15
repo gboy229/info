@@ -97,6 +97,26 @@ class Info extends Base {
         $category=db('category')->where(['dir_name'=>$name,'display'=>1])->field('id,name,dir_name,path_id')->find();
         if(is_ajax()){
 
+
+            $check_moone=false;
+            if($this->member['id']){
+                $group=db('member_group')->where(['id'=>$this->member['group_id']])->find();
+                $sqlmap = [];
+                $sqlmap['uid'] = $this->member['id'];
+                $sqlmap['add_time'] = ['between', [strtotime(date('Y-m-d')), strtotime(date('Y-m-d 23:59:59'))]];
+                $day_add_count = db('content')->where($sqlmap)->count(1);
+                if ($day_add_count >= $group['day_count']) {
+                    if($group['cost']>0){
+                        if( $this->member['money']<$group['cost']){
+                            showmessage('余额不足，请充值');
+                        }
+                        $check_moone=true;
+                    }
+                }
+            }
+
+
+
             if(!$category){
                 showmessage('发布类型不正确');
             }
@@ -131,14 +151,26 @@ class Info extends Base {
             $data['display']=1;
             $data['uid']=$this->member['id'];
 
+
             if(mb_strlen($data['title'])<5) showmessage('标题太少了');
             if(mb_strlen($data['title'])>30) showmessage('标题太长了');
             if(empty($data['content'])) showmessage('请输入内容');
 
-
-            if(db('content')->insertGetId($data)){
+            db('content')->startTrans();
+            $this->member_service->startTrans();
+            $result=db('content')->insertGetId($data);
+            if( $check_moone){
+                $money=$this->member_service->change_account($this->member['id'],'money','-'.$group['cost'],'发布信息');
+            }else{
+                $money=true;
+            }
+            if($result && $money){
+                db('content')->commit();
+                $this->member_service->commit();
                 showmessage('发布成功，请等待审核',url('/member/info/lists/'.$category['dir_name']),1);
             }else{
+                db('content')->rollback();
+                $this->member_service->rollback();
                 showmessage('发布失败，请重新操作');
             }
 

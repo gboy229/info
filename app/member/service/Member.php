@@ -331,9 +331,6 @@ class Member extends Model{
                 $data['two_password']=$this->create_password($data['two_password'],$encrypt);
             }
 
-            //封号和矿机
-            //db('kuangji_order')->where(['buy_id'=>$data['id']])->data(['member_status'=>$data['islock']])->update();
-
 
 
 

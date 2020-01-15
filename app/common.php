@@ -1063,7 +1063,7 @@ function to_sendsms($mobile,$content='',$code=''){
 
         if(!$content){
             $code=mt_rand(100000,999999);
-            $content='您的验证码：'.$code;
+            $content='您的验证码为'.$code.'，5分钟内有效';
         }
 
 

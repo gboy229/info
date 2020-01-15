@@ -52,7 +52,7 @@
     <div id="foot-bar" class="dsn">
         <div class="foot-bar-fix"></div>
         <div class="foot-bar btns">
-            <input type="submit" value="置顶选中" class="btn-green" onclick="this.form.action='{:url("top")}';"/><input type="submit" name="submit" value="删除选中" class="btn-red" onclick="if(confirm('确定要删除选中吗？')){this.form.action='{:url('delete')}'}else{return false;}"/></div>
+            <input type="button" value="置顶选中" class="btn-green" onclick="tops();"/><input type="submit" name="submit" value="删除选中" class="btn-red" onclick="if(confirm('确定要删除选中吗？')){this.form.action='{:url('delete')}'}else{return false;}"/></div>
     </div>
 </form>
 <script type="text/javascript">
@@ -79,6 +79,22 @@
             }
         });
     });
+
+    function tops() {
+
+        $.post('{:url("top")}',$('form').serialize(),function(data){
+            if(data.status=='0'){
+                Dtoast(data.message);
+            }else{
+                Dtoast(data.message);
+                setTimeout(function(){
+                    location.href=data.referer;
+                },1000);
+            }
+
+        },'json');
+        return  false;
+    }
 </script>
 
 

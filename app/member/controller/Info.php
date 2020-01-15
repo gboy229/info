@@ -14,9 +14,10 @@ class Info extends Base {
         $this->member_service=model('member/Member','service');
 
 
-        $status=1;
 
-        if($status){
+        $status=(int) config('cache.switch_tourists');
+
+        if(!$status){
             if($this->member['id'] < 1){
                 $url_forward = input('url_forward') ? input('url_forward') : request()->server('REQUEST_URI');
                 $this->redirect('/member/login',['url_forward'=>$url_forward],302);
@@ -291,6 +292,58 @@ class Info extends Base {
         unset($info['id'],$info['hits']);
         db('content')->insertGetId($info);
         showmessage('','',1);
+    }
+
+
+    public function top(){
+
+
+        $this->check_login();
+
+
+
+        $itemid=input('itemid/a');
+
+        if( !$itemid ||  !is_array($itemid)){
+            showmessage('请选择');
+        }
+
+
+        $group=db('member_group')->where(['id'=>$this->member['group_id']])->find();
+        $check_money=false;
+        if($group['top_cost']>0){
+            $top_num=db('content')->where(['id'=>['in',$itemid],'uid'=>$this->member['id']])->count(1);
+            $top_money=$top_num*$group['top_cost'];
+            if( $this->member['money']<($top_money)){
+                showmessage('余额不足，请充值');
+            }
+            $check_money=true;
+        }
+
+        $top_time=config('cache.top_time')*3600;
+
+
+        db('content')->startTrans();
+
+
+        $this->member_service->startTrans();
+        $result=db('content')->where(['id'=>['in',$itemid],'uid'=>$this->member['id']])->setInc('update_time',$top_time);
+        if( $check_money){
+            $money=$this->member_service->change_account($this->member['id'],'money','-'.$top_money,'置顶信息');
+        }else{
+            $money=true;
+        }
+
+        if(!$result || !$money){
+            db('content')->rollback();
+            $this->member_service->rollback();
+            showmessage('置顶失败');
+        }else{
+            db('content')->commit();
+            $this->member_service->commit();
+            showmessage('置顶成功','',1);
+        }
+
     }
 
 

@@ -25,7 +25,7 @@ class Index extends Base{
         }
 
 
-        $news=model('content/Content')->where(['display'=>1,'path_id'=>['like','%,4,%']])->order('id desc')->limit(15)->select();
+        $news=model('content/Content')->where(['display'=>1,'path_id'=>['like','%,4,%']])->order('update_time desc , id desc')->limit(15)->select();
 
         $this->assign('category_list',$category_list)->assign('news',$news);
         return $this->fetch();
@@ -67,7 +67,7 @@ class Index extends Base{
             $did_name=db('district')->where(['id'=>$did])->value('name');
         }
 
-        $list=model('content/Content')->where($sqlmap)->order('id desc')->paginate();
+        $list=model('content/Content')->where($sqlmap)->order('update_time desc , id desc')->paginate();
 
 
         $this->assign('category_list',$category_list)->assign('list',$list)->assign('name',$name)->assign('category',$category);
@@ -113,7 +113,7 @@ class Index extends Base{
             $sqlmap['category_id']=$category['id'];
             $sqlmap['display']=3;
             $sqlmap['title']=['like','%'.$kw.'%'];
-            $list=model('content/Content')->where($sqlmap)->order('id desc')->paginate();
+            $list=model('content/Content')->where($sqlmap)->order('update_time desc , id desc')->paginate();
         }
 
 

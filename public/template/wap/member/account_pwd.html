@@ -1,0 +1,52 @@
+{extend name="template/wap/base.html" /}
+{block name="css"}
+<style>
+    .foot-bar{display: none;}
+</style>
+{/block}
+{block name="body"}
+<div id="head-bar">
+    <div class="head-bar">
+        <div class="head-bar-back">
+            <a href="javascript:Dback();"><img src="__TMPL__/images/icon-back.png" width="24" height="24"/><span>返回</span></a>
+        </div>
+        <div class="head-bar-title">修改密码</div>
+    </div>
+    <div class="head-bar-fix"></div>
+</div>
+<form method="post" action="?" onsubmit="return check();">
+    <div class="ui-form ">
+        <p>现有密码<b id="doldpassword"></b></p>
+        <div><input type="password" name="post[oldpassword]" id="oldpassword" autocomplete="off"/></div>
+        <p>新登录密码<b id="dpassword"></b></p>
+        <div><input type="password" name="post[password]" id="password" onblur="validator('password');" autocomplete="off"/></div>
+        <p>重复登录密码<b id="dcpassword"></b></p>
+        <div><input type="password" name="post[cpassword]" id="cpassword" autocomplete="off"/></div>
+
+
+        <div class="blank-16"></div>
+
+    </div>
+    <div class="blank-32"></div>
+    <div style="padding:0 16px;"><input type="submit" name="submit" value="确 认" class="btn-green"/></div>
+    <div class="blank-32"></div>
+</form>
+<script type="text/javascript">
+    function check() {
+
+        $.post('{:url("pwd")}',$('form').serialize(),function(data){
+            if(data.status=='0'){
+                Dtoast(data.message);
+
+            }else{
+                Dtoast(data.message);
+                setTimeout(function(){
+                    location.href=data.referer;
+                },1000);
+            }
+
+        },'json');
+        return  false;
+    }
+</script>
+{/block}

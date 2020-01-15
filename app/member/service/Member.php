@@ -409,6 +409,13 @@ class Member extends Model{
             return false;
         }
 
+        if($member['password']==$this->create_password($params['password'],$member['encrypt'])){
+            $this->errors='新密码不能和旧密码一样';
+            return false;
+        }
+
+
+
 
         if(!$this->model->isupdate(true)->where(['id'=>$mid])->data(['password'=>$this->create_password($params['password'],$member['encrypt'])])->update()){
             $this->errors='修改失败了';

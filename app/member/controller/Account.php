@@ -57,4 +57,29 @@ class Account extends Check {
     }
 
 
+    public function pwd(){
+
+        if(is_ajax()){
+
+            $post=input('post/a');
+
+
+            $data=[];
+            $data['old_pwd']=$post['oldpassword'];
+            $data['password']=$post['password'];
+            $data['repassword']=$post['cpassword'];
+
+            if(!$this->member_service->edit_pwd($this->member['id'],$data)){
+                showmessage($this->member_service->errors);
+            }
+            showmessage('密码修改成功，请重新登录',url('/member/login'),1);
+
+        }else{
+
+            return $this->fetch();
+        }
+
+    }
+
+
 }

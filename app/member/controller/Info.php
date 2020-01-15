@@ -41,7 +41,7 @@ class Info extends Base {
 
 
 
-
+        $this->check_login();
 
 
 
@@ -198,9 +198,8 @@ class Info extends Base {
 
 
 
-        if($this->member['id'] < 1){
-            $this->redirect('/member/info/category','',302);
-        }
+
+        $this->check_login();
 
         $name=input('name/s');
         $itemid=(int) input('itemid/d');
@@ -282,8 +281,11 @@ class Info extends Base {
 
 
     public function copy(){
-        $itemid=(int) input('itemid');
 
+
+        $this->check_login();
+
+        $itemid=(int) input('itemid');
         $info=db('content')->where(['id'=>$itemid,'uid'=>$this->member['id']])->find();
         $info['add_time']=time();
         unset($info['id'],$info['hits']);
@@ -294,9 +296,10 @@ class Info extends Base {
 
     public function delete(){
 
+        $this->check_login();
+
+
         $itemid=input('itemid/a');
-
-
 
         if(is_array($itemid) && $this->member['id']){
 
@@ -336,6 +339,12 @@ class Info extends Base {
 
 
 
+    }
+
+    private function check_login(){
+        if($this->member['id'] < 1){
+            $this->redirect('/member/login','',302);
+        }
     }
 
 

@@ -152,6 +152,7 @@ class User extends Base {
 
         ob_clean();
         $captcha = new \think\captcha\Captcha();
+        $captcha->codeSet='0123456789';
         $captcha->imageW=155;
         $captcha->imageH = 40;  //图片高
         $captcha->fontSize =20;  //字体大小

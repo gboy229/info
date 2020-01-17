@@ -70,7 +70,7 @@
      <td><img src="{if condition="$foo['thumb']"}__ROOT__{$foo['thumb']}{else/}__STATIC__/images/nopic.gif{/if}" width="50"></td>
      <td class="left">{$foo['title']}</td>
      <td>{$foo['category_name']}</td>
-     <td><i class="{if condition="$foo['display'] eq 1"}icon-ok text-success{else/}icon-remove text-danger{/if} bigger-120"></i></td>
+     <td>{$foo['status_type']}</td>
         <td>{$foo['add_time']}</td>
      <td>
 

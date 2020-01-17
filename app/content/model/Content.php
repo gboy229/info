@@ -8,7 +8,7 @@ class Content extends Model{
 
     protected $insert=['add_time'];
     protected $update=['update_time'];
-    protected $append=['category_name','user_type','username'];
+    protected $append=['category_name','user_type','username','status_type'];
 
 
     protected static function init()
@@ -79,6 +79,15 @@ class Content extends Model{
 
         return nl2br($value);
     }
+	 protected function getStatusTypeAttr($value,$data){
+
+		$arr=[1=>'审核中',2=>'未通过',3=>'已发布',4=>'过期'];
+		
+		return $arr[$data['display']];
+        
+    }
+	
+	
 
 
 }

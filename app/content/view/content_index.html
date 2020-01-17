@@ -16,7 +16,7 @@
                             <form class="form-inline">
                                    <?php
                                         echo  \form\Form::input('text','keywords',input('get.keywords'),'关键词','',array('placeholder'=>'标题'));
-                                        echo  \form\Form::input('select','status',input('get.status'),'状态','',array('items'=>array(''=>'全部','1'=>'显示','0'=>'不显示')));
+                                        echo  \form\Form::input('select','status',input('get.status'),'状态','',array('items'=>array(''=>'全部','1'=>'审核中','2'=>'未通过','3'=>'已审核')));
                                         echo  \form\Form::input('select','order',input('get.order'),'排序','',array('items'=>array('默认','update_time'=>'更新时间','add_time'=>'添加时间','hits'=>'点击量','排序号')));
                                         echo  \form\Form::input('calendar','start_time',input('get.start_time'),'时间','');
                                         echo  \form\Form::input('calendar','end_time',input('get.end_time'),'','');

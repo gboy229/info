@@ -37,7 +37,7 @@
 		echo  \form\Form::input('text','keywords',isset($info['keywords'])?$info['keywords']:'','关键词','关键词出现在页面头部的标签中，多个关键字请用分隔符分隔');
          echo  \form\Form::input('textarea','description',isset($info['description'])?$info['description']:'','描述','描述出现在页面头部的标签中，最多不能超过225个字符');
          echo  \form\Form::input('radio','recommend',isset($info['recommend']) ? $info['recommend'] :1,'是否推荐','是否推荐文章',array('items'=>array('否','是')));
-         echo  \form\Form::input('radio','display',isset($info['display']) ? $info['display'] :1,'审核','',array('items'=>[1=>'审核中',2=>'未通过',3=>'已发布',4=>'过期']));
+         echo  \form\Form::input('radio','display',isset($info['display']) ? $info['display'] :1,'审核','',array('items'=>[1=>'审核中',2=>'未通过',3=>'审核通过']));
 		 
 		 
         ?>

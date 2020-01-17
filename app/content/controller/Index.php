@@ -25,7 +25,7 @@ class Index extends Base{
         }
 
 
-        $news=model('content/Content')->where(['display'=>1,'path_id'=>['like','%,4,%']])->order('update_time desc , id desc')->limit(15)->select();
+        $news=model('content/Content')->where(['display'=>3,'path_id'=>['like','%,4,%']])->order('update_time desc , id desc')->limit(15)->select();
 
         $this->assign('category_list',$category_list)->assign('news',$news);
         return $this->fetch();
@@ -82,7 +82,7 @@ class Index extends Base{
         $sqlmap=[];
 
         $sqlmap['path_id']=['like','%,4,%'];
-        $sqlmap['display']=1;
+        $sqlmap['display']=3;
         $list=model('content/Content')->where($sqlmap)->order('id desc')->paginate();
 
         $this->assign('list',$list);

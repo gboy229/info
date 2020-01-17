@@ -47,7 +47,7 @@ class Info extends Base{
         $route=$request->route();
         $itemid=(int)  trim($route['id']);
 
-        if(!$itemid || (!$info=model('content/Content')->where(['id'=>$itemid,'display'=>1,'path_id'=>['like','%,4,%']])->find())){
+        if(!$itemid || (!$info=model('content/Content')->where(['id'=>$itemid,'display'=>3,'path_id'=>['like','%,4,%']])->find())){
             $this->redirect('/','',302);
         }
 

@@ -81,7 +81,7 @@ class Content extends Model{
     }
 	 protected function getStatusTypeAttr($value,$data){
 
-		$arr=[1=>'审核中',2=>'未通过',3=>'已发布',4=>'过期'];
+		$arr=[1=>'审核中',2=>'未通过',3=>'审核通过'];
 		
 		return $arr[$data['display']];
         

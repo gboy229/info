@@ -38,9 +38,7 @@ div id="head-bar">
                 }
 
                 $(function() {
-                    $('#captcha').bind('keyup blur', function() {
-                        checkcaptcha($('#captcha').val());
-                    });
+
                 });
             </script></div></div>
         <div class="list-inp"><div class="bd-b"><input type="tel" name="code" id="code" placeholder="短信验证码" value="" onblur="window.scrollTo(0,0);" style="width:120px;"/><a href="javascript:;" class="b" onclick="Ssend();" id="send">发送短信</a></div></div>
@@ -72,6 +70,7 @@ div id="head-bar">
             $.post('{:url("/member/register")}',$('form').serialize(),function(data){
 
                 if(data.status=='0'){
+                    reloadcaptcha();
                     Dtoast(data.message);
 
                 }else{
